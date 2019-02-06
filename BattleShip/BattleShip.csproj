@@ -69,6 +69,7 @@
     <Compile Include="Controllers\ShipController.cs" />
     <Compile Include="Database\ApplicationDbContext.cs" />
     <Compile Include="Models\AbstractEntity.cs" />
+    <Compile Include="Models\IdAttribute.cs" />
     <Compile Include="Utils\ShipFactory.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
