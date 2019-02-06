@@ -38,7 +38,7 @@ public class ShipController
     /// <summary>
     /// @param ship The ship to damage.
     /// </summary>
-    public void DamageShip(AbstractShip ship)
+    public void DamageShip(ShipModel ship)
     {
         // TODO implement here
     }
@@ -47,7 +47,7 @@ public class ShipController
     /// @param pos The positions from which getting the ship.
     /// @return
     /// </summary>
-    public AbstractShip GetShipAtLocation(int[] pos)
+    public ShipModel GetShipAtLocation(int[] pos)
     {
         // TODO See where to store the list of ships.
         return null;
@@ -56,7 +56,7 @@ public class ShipController
     /// <summary>
     /// @param ship The ship to save into the database.
     /// </summary>
-    public void DbSave(AbstractShip ship)
+    public void DbSave(ShipModel ship)
     {
         // TODO implement here
     }

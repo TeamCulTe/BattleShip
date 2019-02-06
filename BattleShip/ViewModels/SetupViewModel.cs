@@ -6,7 +6,6 @@ using System.Text;
 
 public class SetupViewModel
 {
-
     public SetupViewModel() {
     }
 

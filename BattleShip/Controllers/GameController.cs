@@ -25,7 +25,7 @@ public class GameController
     /// <summary>
     /// Default constructor.
     /// </summary>
-    public PlayerController()
+    public GameController()
     {
             
     }

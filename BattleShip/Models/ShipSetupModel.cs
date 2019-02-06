@@ -31,12 +31,36 @@ public class ShipSetupModel : AbstractSetup
     {
 
     }
+    public ShipSetupModel(string name, int[] size, int shipNumber) : base(name, size)
+    {
+        this.shipNumber = shipNumber;
+    }
     #endregion
 
     #region StaticFunctions
     #endregion
 
     #region Functions
+    override public String ToString()
+    {
+        String repr = String.Format("id : {0} - name : {1} - shipNumber : {2} - size : [", this.Id, this.Name, this.ShipNumber);
+
+        for (var i = 0; i < this.Size.Length; i++)
+        {
+            repr += this.Size[i];
+
+            if (i == this.Size.Length - 1)
+            {
+                repr += "]";
+            }
+            else
+            {
+                repr += ", ";
+            }
+        }
+
+        return repr;
+    }
     #endregion
 
     #region Events

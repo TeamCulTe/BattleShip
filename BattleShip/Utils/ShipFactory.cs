@@ -27,7 +27,6 @@ public class ShipFactory
     /// </summary>
     public ShipFactory()
     {
-
     }
     #endregion
 
@@ -38,7 +37,7 @@ public class ShipFactory
     /// <summary>
     /// @return A list of initialized ships depending on the configuration for the IA player.
     /// </summary>
-    public AbstractShip[] GenerateShips()
+    public ShipModel[] GenerateShips()
     {
         // TODO implement here
         return null;
@@ -49,10 +48,35 @@ public class ShipFactory
     /// @param shipType The type of ship to generate.
     /// @return The generated ship.
     /// </summary>
-    public AbstractShip GenerateShip(int[] pos, ShipType shipType)
+    public ShipModel GenerateShip(int[][] pos, ShipType shipType)
     {
-        // TODO implement here
-        return null;
+        ShipSetupModel setup;
+        // TODO Load the parameters depending on the ship category
+        String name;
+
+        switch (shipType)
+        {
+            case ShipType.CARRIER:
+                name = "Carrier";
+
+                break;
+            case ShipType.SUBMARINE:
+                name = "Carrier";
+
+                break;
+            case ShipType.DESTROYER:
+                name = "Destroyer";
+
+                break;
+            case ShipType.BATTLESHIP:
+                name = "Battleship";
+
+                break;
+            default:
+                return null;
+        }
+
+        return new ShipModel(name, pos, null);
     }
     #endregion
 
