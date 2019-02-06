@@ -6,7 +6,6 @@ using System.Text;
 
 public class MapViewModel
 {
-
     #region StaticVariables
     #endregion
 

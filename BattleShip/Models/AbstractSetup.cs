@@ -1,10 +1,11 @@
 
+using BattleShip.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public abstract class AbstractSetup
+public abstract class AbstractSetup : AbstractEntity
 {
     #region StaticVariables
     #endregion
@@ -16,15 +17,13 @@ public abstract class AbstractSetup
     #endregion
 
     #region Attributes
-    private int[] size;
     private String name;
-    private int id;
+    private int[] size;
     #endregion
 
     #region Properties
-    public int[] Size { get => size; set => size = value; }
     public string Name { get => name; set => name = value; }
-    public int Id { get => id; set => id = value; }
+    public int[] Size { get => size; set => size = value; }
     #endregion
 
     #region Constructors
@@ -34,6 +33,18 @@ public abstract class AbstractSetup
     public AbstractSetup()
     {
             
+    }
+
+    protected AbstractSetup(string name, int[] size)
+    {
+        this.name = name;
+        this.size = size;
+    }
+
+    protected AbstractSetup(long id, string name, int[] size) : base(id)
+    {
+        this.name = name;
+        this.size = size;
     }
     #endregion
 

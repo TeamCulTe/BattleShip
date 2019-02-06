@@ -31,12 +31,36 @@ public class MapSetupModel : AbstractSetup
     {
 
     }
+
+    public MapSetupModel(string name, int[] size) : base (name, size)
+    {
+    }
     #endregion
 
     #region StaticFunctions
     #endregion
 
     #region Functions
+    override public String ToString()
+    {
+        String repr = String.Format("id : {0} - name : {1} - dimensions : {2} - size : [", this.Id, this.Name, MapSetupModel.Dimensions);
+
+        for (var i = 0; i < this.Size.Length; i++)
+        {
+            repr += this.Size[i];
+
+            if (i == this.Size.Length - 1)
+            {
+                repr += "]";
+            }
+            else
+            {
+                repr += ", ";
+            }
+        }
+
+        return repr;
+    }
     #endregion
 
     #region Events

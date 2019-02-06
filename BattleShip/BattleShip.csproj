@@ -35,7 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +67,8 @@
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\ShipController.cs" />
+    <Compile Include="Database\ApplicationDbContext.cs" />
+    <Compile Include="Models\AbstractEntity.cs" />
     <Compile Include="Utils\ShipFactory.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
@@ -80,17 +89,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AbstractSetup.cs" />
-    <Compile Include="Models\AbstractShip.cs" />
-    <Compile Include="Models\BattleShipModel.cs" />
-    <Compile Include="Models\CarrierModel.cs" />
-    <Compile Include="Models\DestroyerModel.cs" />
+    <Compile Include="Models\ShipModel.cs" />
     <Compile Include="Models\GameModel.cs" />
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\MapSetupModel.cs" />
     <Compile Include="Models\PlayerModel.cs" />
     <Compile Include="Models\ShipSetupModel.cs" />
     <Compile Include="Models\ShipType.cs" />
-    <Compile Include="Models\SubmarineModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -108,6 +113,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -115,6 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WorkLog.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,10 +1,11 @@
 
+using BattleShip.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class PlayerModel
+public class PlayerModel : AbstractEntity
 {
     #region StaticVariables
     #endregion
@@ -16,19 +17,17 @@ public class PlayerModel
     #endregion
 
     #region Attributes
-    private int id;
     private String name;
     private MapModel map;
-    private AbstractShip[] ships;
-    private int[][] targettedLocations;
+    private ShipModel[] ships;
+    private List<int[]> targettedLocations;
     #endregion
 
     #region Properties
-    public int Id { get => id; set => id = value; }
     public string Name { get => name; set => name = value; }
     public MapModel Map { get => map; set => map = value; }
-    public AbstractShip[] Ships { get => ships; set => ships = value; }
-    public int[][] TargettedLocations { get => targettedLocations; set => targettedLocations = value; }
+    public ShipModel[] Ships { get => ships; set => ships = value; }
+    public List<int[]> TargettedLocations { get => targettedLocations; set => targettedLocations = value; }
     #endregion
 
     #region Constructors
@@ -37,7 +36,30 @@ public class PlayerModel
     /// </summary>
     public PlayerModel()
     {
+    }
 
+    public PlayerModel(string name, MapModel map, ShipModel[] ships)
+    {
+        this.name = name;
+        this.map = map;
+        this.ships = ships;
+        this.targettedLocations = new List<int[]>();
+    }
+
+    public PlayerModel(string name, MapModel map, ShipModel[] ships, List<int[]> targettedLocations)
+    {
+        this.name = name;
+        this.map = map;
+        this.ships = ships;
+        this.targettedLocations = targettedLocations;
+    }
+
+    public PlayerModel(long id, string name, MapModel map, ShipModel[] ships, List<int[]> targettedLocations) : base(id)
+    {
+        this.name = name;
+        this.map = map;
+        this.ships = ships;
+        this.targettedLocations = targettedLocations;
     }
     #endregion
 
@@ -59,6 +81,53 @@ public class PlayerModel
         }
 
         return false;
+    }
+
+    override public String ToString()
+    {
+        String repr = String.Format("id : {0} - name = {1} - ships : [", this.Id, this.Name);
+
+        for (var i = 0; i < this.Ships.Length; i++)
+        {
+            repr += this.Ships[i].ToString();
+
+            if (i == this.Ships.Length - 1)
+            {
+                repr += "] - targettedLocations : [";
+            }
+            else
+            {
+                repr += ", ";
+            }
+        }
+
+        for (var i = 0; i < this.TargettedLocations.Count; i++)
+        {
+            for (var j = 0; j < this.TargettedLocations[i].Length; j++)
+            {
+                repr += "[" + this.TargettedLocations[i][j];
+
+                if (j == this.TargettedLocations[i].Length - 1)
+                {
+                    repr += "]";
+                }
+                else
+                {
+                    repr += " ; ";
+                }
+            }
+
+            if (i == this.TargettedLocations.Count - 1)
+            {
+                repr += "]";
+            }
+            else
+            {
+                repr += ", ";
+            }
+        }
+
+        return repr;
     }
     #endregion
 
