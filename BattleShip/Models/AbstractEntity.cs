@@ -22,6 +22,7 @@ namespace BattleShip.Models
         #endregion
 
         #region Properties
+        [Id]
         public long Id { get => id; set => id = value; }
         #endregion
 
