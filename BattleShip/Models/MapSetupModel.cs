@@ -32,6 +32,10 @@ public class MapSetupModel : AbstractSetup
 
     }
 
+    public MapSetupModel(int[] size) : base("MapSetup", size)
+    {
+    }
+
     public MapSetupModel(string name, int[] size) : base (name, size)
     {
     }

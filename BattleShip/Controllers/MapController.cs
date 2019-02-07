@@ -1,4 +1,5 @@
 
+using BattleShip.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,11 @@ public class MapController
     /// </summary>
     public void DbSave(MapModel map)
     {
-        // TODO implement here
+        using (var dbContext = new ApplicationDbContext())
+        {
+            dbContext.MapModels.Add(map);
+            dbContext.SaveChanges();
+        }
     }
     #endregion
 

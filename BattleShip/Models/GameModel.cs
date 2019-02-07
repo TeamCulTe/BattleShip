@@ -59,11 +59,12 @@ public class GameModel : AbstractEntity
     #region Functions
     public override string ToString()
     {
-        String repr = String.Format("[GameModel] id : {0} - turn : {1}", this.Id, this.Turn);
+        String repr = String.Format("id : {0} - turn : {1}", this.Id, this.Turn);
 
         if (this.Players != null)
         {
-            repr += " - players : [";
+            repr += "-players : [";
+
             for (var i = 0; i < this.Players.Length; i++)
             {
                 repr += this.Players[i].ToString();
@@ -78,7 +79,6 @@ public class GameModel : AbstractEntity
                 }
             }
         }
-
         return repr;
     }
     #endregion

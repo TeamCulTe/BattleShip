@@ -1,4 +1,5 @@
 
+using BattleShip.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,11 @@ public class SetupController
     /// </summary>
     public void DbSave(AbstractSetup setup)
     {
-        // TODO implement here
+        using (var dbContext = new ApplicationDbContext())
+        {
+            dbContext.AbstractSetups.Add(setup);
+            dbContext.SaveChanges();
+        }
     }
 
     /// <summary>

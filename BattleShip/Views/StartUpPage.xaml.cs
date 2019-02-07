@@ -41,6 +41,7 @@ namespace BattleShip.Views
         public StartUpPage()
         {
             InitializeComponent();
+            this.InitShipLists();
         }
         #endregion
 
@@ -48,6 +49,17 @@ namespace BattleShip.Views
         #endregion
 
         #region Functions
+        private void InitShipLists()
+        {
+            foreach (var elt in Enum.GetValues(typeof(ShipType)))
+            {
+                this.firstTypeValue.Items.Add(elt);
+                this.secondTypeValue.Items.Add(elt);
+                this.thirdTypeValue.Items.Add(elt);
+                this.fourthTypeValue.Items.Add(elt);
+            }
+        }
+
         private Boolean IsNumberField(TextBox textBox)
         {
             if (!int.TryParse(textBox.Text, out int nb))
@@ -57,6 +69,7 @@ namespace BattleShip.Views
 
             return false;
         }
+
         private Boolean ValidateShipFields()
         {
             Boolean valid = this.IsNumberField(this.firstShipNumberValue) &&
@@ -75,11 +88,37 @@ namespace BattleShip.Views
             return valid;
         }
 
+        private Boolean ValidateShipTypes()
+        {
+            String[] types = new String[4];
+
+            types[0] = (this.firstTypeValue.SelectedItem != null) ? this.firstTypeValue.SelectedItem.ToString() : "";
+            types[1] = (this.secondTypeValue.SelectedItem != null) ? this.firstTypeValue.SelectedItem.ToString() : "";
+            types[2] = (this.thirdTypeValue.SelectedItem != null) ? this.firstTypeValue.SelectedItem.ToString() : "";
+            types[3] = (this.fourthTypeValue.SelectedItem != null) ? this.firstTypeValue.SelectedItem.ToString() : "";
+
+            for (int i = 0; i < types.Length; i++)
+            {
+                if (types[i] == "")
+                {
+                    return false;
+                }
+
+                for (int j = 0; j != i && j < types.Length; j++)
+                {
+                    if (types[i] == types[j])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         private Boolean ValidateMapFields()
         {
-            Boolean valid = this.IsNumberField(this.mapXSizeValue) && this.IsNumberField(this.mapYSizeValue);
-
-            return valid;
+            return this.IsNumberField(this.mapXSizeValue) && this.IsNumberField(this.mapYSizeValue);
         }
 
         private Boolean ValidateSizes()
@@ -102,13 +141,12 @@ namespace BattleShip.Views
             int.TryParse(this.thirdShipYSizeValue.Text, out int thirdShipY);
             int.TryParse(this.fourthShipYSizeValue.Text, out int fourthShipY);
 
-            return false;
-        }
+            int shipTotalSize = firstShipNb * firstShipX * firstShipY +
+                secondShipNb * secondShipX * secondShipY +
+                thirdShipNb * thirdShipX * thirdShipY +
+                fourthShipNb * fourthShipX * fourthShipY;
 
-        private void HideErrorMessages()
-        {
-            this.shipInputErrorMessage.Visibility = Visibility.Hidden;
-            this.mapInputErrorMessage.Visibility = Visibility.Hidden;
+            return (mapX * mapY > shipTotalSize);
         }
         #endregion
 
@@ -140,20 +178,35 @@ namespace BattleShip.Views
 
         private void ValidateButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.ValidateShipFields() && this.ValidateMapFields())
+            if (this.ValidateShipFields() && this.ValidateMapFields() && this.ValidateShipTypes())
             {
-                this.HideErrorMessages();
+                if (!this.ValidateSizes())
+                {
+                    MessageBox.Show("The total ship sizes cannot be bigger than the map ones.", "Error", System.Windows.MessageBoxButton.OK);
+
+                    return;
+                }
+
+                ShipSetupModel shipSetup = new ShipSetupModel();
             }
             else
             {
-                if (this.ValidateShipFields())
+                String errorMessage = "";
+
+                if (!this.ValidateShipFields())
                 {
-                    (this.FindName("shipInputErrorMessage") as TextBlock).Visibility = Visibility.Visible;
+                    errorMessage = "The ship fields must only contains numbers.";
                 }
-                if (this.ValidateMapFields())
+                if (!this.ValidateMapFields())
                 {
-                    (this.FindName("mapInputErrorMessage") as TextBlock).Visibility = Visibility.Visible;
+                    errorMessage = "The map fields must only contains numbers.";
                 }
+                if (!this.ValidateShipTypes())
+                {
+                    errorMessage = "The ship types must be set and unique (one of each).";
+                }
+
+                MessageBox.Show(errorMessage, "Error", System.Windows.MessageBoxButton.OK);
             }
         }
     }

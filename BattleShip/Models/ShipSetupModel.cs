@@ -31,6 +31,11 @@ public class ShipSetupModel : AbstractSetup
     {
 
     }
+    public ShipSetupModel(int[] size, int shipNumber) : base("ShipSetup", size)
+    {
+        this.shipNumber = shipNumber;
+    }
+
     public ShipSetupModel(string name, int[] size, int shipNumber) : base(name, size)
     {
         this.shipNumber = shipNumber;

@@ -27,7 +27,7 @@ public class ShipModel : AbstractEntity
     public string Name { get => name; set => name = value; }
     public int Damages { get => damages; set => damages = value; }
     public int[][] Locations { get => locations; set => locations = value; }
-    public ShipSetupModel Setup { get => setup; }
+    public ShipSetupModel Setup { get => setup; set => setup = value; }
     #endregion
 
     #region Constructors

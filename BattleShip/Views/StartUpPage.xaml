@@ -43,36 +43,34 @@
         <TextBlock x:Name="playerNameLabel" Grid.Row="4" Grid.Column="6" TextAlignment="Center" VerticalAlignment="Center">Player name</TextBlock>
         <TextBox x:Name="playerNameValue" Grid.Row="4" Grid.Column="7" Grid.ColumnSpan="2" VerticalAlignment="Center"/>
         <TextBlock x:Name="pickShipsLabel" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Center">Pick 4 type of ship</TextBlock>
-        <TextBlock x:Name="firstTypeLabel" Grid.Row="5" Grid.Column="0"  TextAlignment="Center" VerticalAlignment="Center">1st type</TextBlock>
+        <TextBlock x:Name="firstTypeLabel" Grid.Row="5" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center">1st type</TextBlock>
         <TextBlock x:Name="secondTypeLabel" Grid.Row="6" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center">2nd type</TextBlock>
         <TextBlock x:Name="thirdTypeLabel" Grid.Row="7" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center">3rd type</TextBlock>
         <TextBlock x:Name="fourthTypeLabel" Grid.Row="8" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center">4rd type</TextBlock>
-        <ComboBox x:Name="firstTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" SelectionChanged="FirstTypeValue_SelectionChanged"/>
-        <ComboBox x:Name="secondTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" SelectionChanged="SecondTypeValue_SelectionChanged"/>
-        <ComboBox x:Name="thirdTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="7" Grid.Column="1" SelectionChanged="ThirdTypeValue_SelectionChanged"/>
-        <ComboBox x:Name="fourthTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="8" Grid.Column="1" SelectionChanged="FourthTypeValue_SelectionChanged"/>
-        <TextBlock x:Name="shipNumberLabel" Grid.Row="4" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center">Ship number</TextBlock>
-        <TextBox x:Name="firstShipNumberValue" Grid.Row="5" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBox x:Name="secondShipNumberValue" Grid.Row="6" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBox x:Name="thirdShipNumberValue" Grid.Row="7" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBox x:Name="fourthShipNumberValue" Grid.Row="8" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBlock x:Name="shipXSizeLabel" Grid.Row="4" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">Ship x size</TextBlock>
-        <TextBox x:Name="firstShipXSizeValue" Grid.Row="5" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBox x:Name="secondShipXSizeValue" Grid.Row="6" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBox x:Name="thirdShipXSizeValue" Grid.Row="7" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBox x:Name="fourthShipXSizeValue" Grid.Row="8" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBlock x:Name="shipYSizeLabel" Grid.Row="4" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center">Ship y size</TextBlock>
-        <TextBox x:Name="firstShipYSizeValue" Grid.Row="5" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBox x:Name="secondShipYSizeValue" Grid.Row="6" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBox x:Name="thirdShipYSizeValue" Grid.Row="7" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBox x:Name="fourthShipYSizeValue" Grid.Row="8" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBlock x:Name="shipInputErrorMessage" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" TextAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">The fields above sould be numbers.</TextBlock>
+        <ComboBox x:Name="firstTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" SelectionChanged="FirstTypeValue_SelectionChanged"/>
+        <ComboBox x:Name="secondTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" SelectionChanged="SecondTypeValue_SelectionChanged"/>
+        <ComboBox x:Name="thirdTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" SelectionChanged="ThirdTypeValue_SelectionChanged"/>
+        <ComboBox x:Name="fourthTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" SelectionChanged="FourthTypeValue_SelectionChanged"/>
+        <TextBlock x:Name="shipNumberLabel" Grid.Row="4" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">Ship number</TextBlock>
+        <TextBox x:Name="firstShipNumberValue" Grid.Row="5" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
+        <TextBox x:Name="secondShipNumberValue" Grid.Row="6" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
+        <TextBox x:Name="thirdShipNumberValue" Grid.Row="7" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
+        <TextBox x:Name="fourthShipNumberValue" Grid.Row="8" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
+        <TextBlock x:Name="shipXSizeLabel" Grid.Row="4" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center">Ship x size</TextBlock>
+        <TextBox x:Name="firstShipXSizeValue" Grid.Row="5" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
+        <TextBox x:Name="secondShipXSizeValue" Grid.Row="6" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
+        <TextBox x:Name="thirdShipXSizeValue" Grid.Row="7" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
+        <TextBox x:Name="fourthShipXSizeValue" Grid.Row="8" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
+        <TextBlock x:Name="shipYSizeLabel" Grid.Row="4" Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center">Ship y size</TextBlock>
+        <TextBox x:Name="firstShipYSizeValue" Grid.Row="5" Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
+        <TextBox x:Name="secondShipYSizeValue" Grid.Row="6" Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
+        <TextBox x:Name="thirdShipYSizeValue" Grid.Row="7" Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
+        <TextBox x:Name="fourthShipYSizeValue" Grid.Row="8" Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
         <TextBlock x:Name="mapXSizeLabel" Grid.Row="11" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center">Map x size</TextBlock>
         <TextBlock x:Name="mapSetupLabel" Grid.Row="12" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center">Map setup</TextBlock>
         <TextBox x:Name="mapXSizeValue" Grid.Row="12" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
         <TextBlock x:Name="mapYSizeLabel" Grid.Row="11" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center">Map y size</TextBlock>
         <TextBox x:Name="mapYSizeValue" Grid.Row="12" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <TextBlock x:Name="mapInputErrorMessage" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="3" TextAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">The fields above sould be numbers.</TextBlock>
         <Button x:Name="restoreButton" Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="2" Click="ValidateButton_Click" Visibility="Hidden">Restore last config</Button>
         <Button x:Name="validateButton" Grid.Row="15" Grid.Column="4" Grid.ColumnSpan="2" Click="ValidateButton_Click">Validate</Button>
     </Grid>

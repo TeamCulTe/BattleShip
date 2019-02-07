@@ -1,4 +1,5 @@
 
+using BattleShip.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,11 +37,15 @@ public class GameController
 
     #region Functions
     /// <summary>
-    /// @param player
+    /// @param game
     /// </summary>
     public void DbSave(GameModel game)
     {
-        // TODO implement here
+        using (var dbContext = new ApplicationDbContext())
+        {
+            dbContext.GameModels.Add(game);
+            dbContext.SaveChanges();
+        }
     }
     #endregion
 
