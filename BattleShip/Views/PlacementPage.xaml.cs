@@ -90,6 +90,8 @@ namespace BattleShip.Views
                     button.Name = String.Format("btnRow{0}Col{1}", row, col);
                     button.Click += new RoutedEventHandler(NewButton_Click);
 
+                    this.field.Children.Add(button);
+
                     Grid.SetRow(button, row);
                     Grid.SetColumn(button, col);
                 }
