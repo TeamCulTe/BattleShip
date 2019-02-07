@@ -64,10 +64,10 @@ namespace BattleShip.Views
         {
             if (!int.TryParse(textBox.Text, out int nb))
             {
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         private Boolean ValidateShipFields()
@@ -93,9 +93,9 @@ namespace BattleShip.Views
             String[] types = new String[4];
 
             types[0] = (this.firstTypeValue.SelectedItem != null) ? this.firstTypeValue.SelectedItem.ToString() : "";
-            types[1] = (this.secondTypeValue.SelectedItem != null) ? this.firstTypeValue.SelectedItem.ToString() : "";
-            types[2] = (this.thirdTypeValue.SelectedItem != null) ? this.firstTypeValue.SelectedItem.ToString() : "";
-            types[3] = (this.fourthTypeValue.SelectedItem != null) ? this.firstTypeValue.SelectedItem.ToString() : "";
+            types[1] = (this.secondTypeValue.SelectedItem != null) ? this.secondTypeValue.SelectedItem.ToString() : "";
+            types[2] = (this.thirdTypeValue.SelectedItem != null) ? this.thirdTypeValue.SelectedItem.ToString() : "";
+            types[3] = (this.fourthTypeValue.SelectedItem != null) ? this.fourthTypeValue.SelectedItem.ToString() : "";
 
             for (int i = 0; i < types.Length; i++)
             {
@@ -148,62 +148,101 @@ namespace BattleShip.Views
 
             return (mapX * mapY > shipTotalSize);
         }
+
+        private Boolean ValidatePlayerName()
+        {
+            return this.playerNameValue.Text != null;
+        }
+
+        private ShipSetupModel InitShipSetupFromInput(int setupNumber)
+        {
+            int[] size;
+            int shipNumber;
+            String name = "Ship setup ";
+
+            switch (setupNumber)
+            {
+                case 1:
+                    name = this.firstTypeValue.SelectedItem.ToString();
+                    size = new int[] { int.Parse(this.firstShipXSizeValue.Text), int.Parse(this.firstShipYSizeValue.Text) };
+                    shipNumber = int.Parse(this.firstShipNumberValue.Text);
+
+                    break;
+                case 2:
+                    name = this.secondTypeValue.SelectedItem.ToString();
+                    size = new int[] { int.Parse(this.secondShipXSizeValue.Text), int.Parse(this.secondShipYSizeValue.Text) };
+                    shipNumber = int.Parse(this.secondShipNumberValue.Text);
+
+                    break;
+                case 3:
+                    name = this.thirdTypeValue.SelectedItem.ToString();
+                    size = new int[] { int.Parse(this.thirdShipXSizeValue.Text), int.Parse(this.thirdShipYSizeValue.Text) };
+                    shipNumber = int.Parse(this.firstShipNumberValue.Text);
+
+                    break;
+                case 4:
+                    name = this.fourthTypeValue.SelectedItem.ToString();
+                    size = new int[] { int.Parse(this.fourthShipXSizeValue.Text), int.Parse(this.fourthShipYSizeValue.Text) };
+                    shipNumber = int.Parse(this.fourthShipNumberValue.Text);
+
+                    break;
+                default:
+                    return null;
+            }
+
+            return new ShipSetupModel(name, size, shipNumber);
+        }
+
+        private MapSetupModel InitMapSetupFromInput()
+        {
+            int[] size = new int[] { int.Parse(this.mapXSizeValue.Text), int.Parse(this.mapYSizeValue.Text) };
+
+            return new MapSetupModel("Map setup", size);
+        }
+
+        private MapModel InitMapModelFromInput()
+        {
+            MapModel.Setup = this.InitMapSetupFromInput();
+
+            return new MapModel();
+        }
+
+        private PlayerModel InitPlayerFromInput()
+        {
+            return new PlayerModel(this.playerNameValue.Text, this.InitMapModelFromInput());
+        }
         #endregion
 
         #region Events
-        private void FirstTypeValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void SecondTypeValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ThirdTypeValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void FourthTypeValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void FirstShipNumberValue_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ValidateButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.ValidateShipFields() && this.ValidateMapFields() && this.ValidateShipTypes())
+            if (this.ValidateShipFields() && this.ValidateMapFields() && this.ValidateShipTypes() && this.ValidateSizes() && this.ValidatePlayerName())
             {
-                if (!this.ValidateSizes())
-                {
-                    MessageBox.Show("The total ship sizes cannot be bigger than the map ones.", "Error", System.Windows.MessageBoxButton.OK);
-
-                    return;
-                }
-
-                ShipSetupModel shipSetup = new ShipSetupModel();
+                
             }
             else
             {
-                String errorMessage = "";
+                String errorMessage = "The form contains the error above :\n";
 
                 if (!this.ValidateShipFields())
                 {
-                    errorMessage = "The ship fields must only contains numbers.";
+                    errorMessage += "The ship fields must only contains numbers.\n";
                 }
                 if (!this.ValidateMapFields())
                 {
-                    errorMessage = "The map fields must only contains numbers.";
+                    errorMessage += "The map fields must only contains numbers.\n";
                 }
                 if (!this.ValidateShipTypes())
                 {
-                    errorMessage = "The ship types must be set and unique (one of each).";
+                    errorMessage += "The ship types must be set and unique (one of each).\n";
+                }
+                if (!this.ValidateSizes())
+                {
+                    errorMessage += "The total ship sizes cannot be bigger than the map ones.\n";
+                }
+                if (!this.ValidatePlayerName())
+                {
+                    errorMessage += "The player name should be filled.\n";
                 }
 
                 MessageBox.Show(errorMessage, "Error", System.Windows.MessageBoxButton.OK);

@@ -47,10 +47,10 @@
         <TextBlock x:Name="secondTypeLabel" Grid.Row="6" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center">2nd type</TextBlock>
         <TextBlock x:Name="thirdTypeLabel" Grid.Row="7" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center">3rd type</TextBlock>
         <TextBlock x:Name="fourthTypeLabel" Grid.Row="8" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center">4rd type</TextBlock>
-        <ComboBox x:Name="firstTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" SelectionChanged="FirstTypeValue_SelectionChanged"/>
-        <ComboBox x:Name="secondTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" SelectionChanged="SecondTypeValue_SelectionChanged"/>
-        <ComboBox x:Name="thirdTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" SelectionChanged="ThirdTypeValue_SelectionChanged"/>
-        <ComboBox x:Name="fourthTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" SelectionChanged="FourthTypeValue_SelectionChanged"/>
+        <ComboBox x:Name="firstTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="secondTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="thirdTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="fourthTypeValue" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"/>
         <TextBlock x:Name="shipNumberLabel" Grid.Row="4" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">Ship number</TextBlock>
         <TextBox x:Name="firstShipNumberValue" Grid.Row="5" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
         <TextBox x:Name="secondShipNumberValue" Grid.Row="6" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>

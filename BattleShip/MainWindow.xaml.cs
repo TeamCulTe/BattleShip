@@ -87,7 +87,7 @@ namespace BattleShip
                 pos[0] = new int[] { 2, 1 };
                 pos[1] = new int[] { 3, 2 };
 
-                dbContext.AbstractSetups.Add(setup);
+                //dbContext.AbstractSetups.Add(setup);
 
                 ShipModel[] ships = new ShipModel[2];
 
@@ -103,10 +103,10 @@ namespace BattleShip
 
                 for (int i = 0; i < 2; i++)
                 {
-                    dbContext.ShipModels.Add(ships[i]);
+                    //dbContext.ShipModels.Add(ships[i]);
                 }
-                dbContext.MapModels.Add(map);
-                dbContext.PlayerModels.Add(p);
+                //dbContext.MapModels.Add(map);
+                //dbContext.PlayerModels.Add(p);
                 dbContext.GameModels.Add(game);
 
                 dbContext.SaveChanges();

@@ -17,7 +17,7 @@ public class GameModel : AbstractEntity
     #endregion
 
     #region Attributes
-    private int turn = 0;
+    private int turn;
     private PlayerModel[] players;
     #endregion
 
@@ -37,19 +37,19 @@ public class GameModel : AbstractEntity
 
     public GameModel(PlayerModel[] players)
     {
-        this.players = players;
+        this.Players = players;
     }
 
     public GameModel(int turn, PlayerModel[] players)
     {
-        this.turn = turn;
-        this.players = players;
+        this.Turn = turn;
+        this.Players = players;
     }
 
     public GameModel(long id, int turn, PlayerModel[] players) : base(id)
     {
-        this.turn = turn;
-        this.players = players;
+        this.Turn = turn;
+        this.Players = players;
     }
     #endregion
 
