@@ -17,7 +17,7 @@ public class GameModel : AbstractEntity
     #endregion
 
     #region Attributes
-    private int turn = 0;
+    private int turn;
     private PlayerModel[] players;
     #endregion
 
@@ -37,19 +37,19 @@ public class GameModel : AbstractEntity
 
     public GameModel(PlayerModel[] players)
     {
-        this.players = players;
+        this.Players = players;
     }
 
     public GameModel(int turn, PlayerModel[] players)
     {
-        this.turn = turn;
-        this.players = players;
+        this.Turn = turn;
+        this.Players = players;
     }
 
     public GameModel(long id, int turn, PlayerModel[] players) : base(id)
     {
-        this.turn = turn;
-        this.players = players;
+        this.Turn = turn;
+        this.Players = players;
     }
     #endregion
 
@@ -59,11 +59,12 @@ public class GameModel : AbstractEntity
     #region Functions
     public override string ToString()
     {
-        String repr = String.Format("[GameModel] id : {0} - turn : {1}", this.Id, this.Turn);
+        String repr = String.Format("id : {0} - turn : {1}", this.Id, this.Turn);
 
         if (this.Players != null)
         {
-            repr += " - players : [";
+            repr += "-players : [";
+
             for (var i = 0; i < this.Players.Length; i++)
             {
                 repr += this.Players[i].ToString();
@@ -78,7 +79,6 @@ public class GameModel : AbstractEntity
                 }
             }
         }
-
         return repr;
     }
     #endregion

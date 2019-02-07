@@ -41,6 +41,7 @@ namespace BattleShip.Views
         public StartUpPage()
         {
             InitializeComponent();
+            this.InitShipLists();
         }
         #endregion
 
@@ -48,15 +49,27 @@ namespace BattleShip.Views
         #endregion
 
         #region Functions
+        private void InitShipLists()
+        {
+            foreach (var elt in Enum.GetValues(typeof(ShipType)))
+            {
+                this.firstTypeValue.Items.Add(elt);
+                this.secondTypeValue.Items.Add(elt);
+                this.thirdTypeValue.Items.Add(elt);
+                this.fourthTypeValue.Items.Add(elt);
+            }
+        }
+
         private Boolean IsNumberField(TextBox textBox)
         {
             if (!int.TryParse(textBox.Text, out int nb))
             {
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
+
         private Boolean ValidateShipFields()
         {
             Boolean valid = this.IsNumberField(this.firstShipNumberValue) &&
@@ -75,11 +88,37 @@ namespace BattleShip.Views
             return valid;
         }
 
+        private Boolean ValidateShipTypes()
+        {
+            String[] types = new String[4];
+
+            types[0] = (this.firstTypeValue.SelectedItem != null) ? this.firstTypeValue.SelectedItem.ToString() : "";
+            types[1] = (this.secondTypeValue.SelectedItem != null) ? this.secondTypeValue.SelectedItem.ToString() : "";
+            types[2] = (this.thirdTypeValue.SelectedItem != null) ? this.thirdTypeValue.SelectedItem.ToString() : "";
+            types[3] = (this.fourthTypeValue.SelectedItem != null) ? this.fourthTypeValue.SelectedItem.ToString() : "";
+
+            for (int i = 0; i < types.Length; i++)
+            {
+                if (types[i] == "")
+                {
+                    return false;
+                }
+
+                for (int j = 0; j != i && j < types.Length; j++)
+                {
+                    if (types[i] == types[j])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         private Boolean ValidateMapFields()
         {
-            Boolean valid = this.IsNumberField(this.mapXSizeValue) && this.IsNumberField(this.mapYSizeValue);
-
-            return valid;
+            return this.IsNumberField(this.mapXSizeValue) && this.IsNumberField(this.mapYSizeValue);
         }
 
         private Boolean ValidateSizes()
@@ -102,58 +141,111 @@ namespace BattleShip.Views
             int.TryParse(this.thirdShipYSizeValue.Text, out int thirdShipY);
             int.TryParse(this.fourthShipYSizeValue.Text, out int fourthShipY);
 
-            return false;
+            int shipTotalSize = firstShipNb * firstShipX * firstShipY +
+                secondShipNb * secondShipX * secondShipY +
+                thirdShipNb * thirdShipX * thirdShipY +
+                fourthShipNb * fourthShipX * fourthShipY;
+
+            return (mapX * mapY > shipTotalSize);
         }
 
-        private void HideErrorMessages()
+        private Boolean ValidatePlayerName()
         {
-            this.shipInputErrorMessage.Visibility = Visibility.Hidden;
-            this.mapInputErrorMessage.Visibility = Visibility.Hidden;
+            return this.playerNameValue.Text != null;
+        }
+
+        private ShipSetupModel InitShipSetupFromInput(int setupNumber)
+        {
+            int[] size;
+            int shipNumber;
+            String name = "Ship setup ";
+
+            switch (setupNumber)
+            {
+                case 1:
+                    name = this.firstTypeValue.SelectedItem.ToString();
+                    size = new int[] { int.Parse(this.firstShipXSizeValue.Text), int.Parse(this.firstShipYSizeValue.Text) };
+                    shipNumber = int.Parse(this.firstShipNumberValue.Text);
+
+                    break;
+                case 2:
+                    name = this.secondTypeValue.SelectedItem.ToString();
+                    size = new int[] { int.Parse(this.secondShipXSizeValue.Text), int.Parse(this.secondShipYSizeValue.Text) };
+                    shipNumber = int.Parse(this.secondShipNumberValue.Text);
+
+                    break;
+                case 3:
+                    name = this.thirdTypeValue.SelectedItem.ToString();
+                    size = new int[] { int.Parse(this.thirdShipXSizeValue.Text), int.Parse(this.thirdShipYSizeValue.Text) };
+                    shipNumber = int.Parse(this.firstShipNumberValue.Text);
+
+                    break;
+                case 4:
+                    name = this.fourthTypeValue.SelectedItem.ToString();
+                    size = new int[] { int.Parse(this.fourthShipXSizeValue.Text), int.Parse(this.fourthShipYSizeValue.Text) };
+                    shipNumber = int.Parse(this.fourthShipNumberValue.Text);
+
+                    break;
+                default:
+                    return null;
+            }
+
+            return new ShipSetupModel(name, size, shipNumber);
+        }
+
+        private MapSetupModel InitMapSetupFromInput()
+        {
+            int[] size = new int[] { int.Parse(this.mapXSizeValue.Text), int.Parse(this.mapYSizeValue.Text) };
+
+            return new MapSetupModel("Map setup", size);
+        }
+
+        private MapModel InitMapModelFromInput()
+        {
+            MapModel.Setup = this.InitMapSetupFromInput();
+
+            return new MapModel();
+        }
+
+        private PlayerModel InitPlayerFromInput()
+        {
+            return new PlayerModel(this.playerNameValue.Text, this.InitMapModelFromInput());
         }
         #endregion
 
         #region Events
-        private void FirstTypeValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void SecondTypeValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ThirdTypeValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void FourthTypeValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void FirstShipNumberValue_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ValidateButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.ValidateShipFields() && this.ValidateMapFields())
+            if (this.ValidateShipFields() && this.ValidateMapFields() && this.ValidateShipTypes() && this.ValidateSizes() && this.ValidatePlayerName())
             {
-                this.HideErrorMessages();
+                
             }
             else
             {
-                if (this.ValidateShipFields())
+                String errorMessage = "The form contains the error above :\n";
+
+                if (!this.ValidateShipFields())
                 {
-                    (this.FindName("shipInputErrorMessage") as TextBlock).Visibility = Visibility.Visible;
+                    errorMessage += "The ship fields must only contains numbers.\n";
                 }
-                if (this.ValidateMapFields())
+                if (!this.ValidateMapFields())
                 {
-                    (this.FindName("mapInputErrorMessage") as TextBlock).Visibility = Visibility.Visible;
+                    errorMessage += "The map fields must only contains numbers.\n";
                 }
+                if (!this.ValidateShipTypes())
+                {
+                    errorMessage += "The ship types must be set and unique (one of each).\n";
+                }
+                if (!this.ValidateSizes())
+                {
+                    errorMessage += "The total ship sizes cannot be bigger than the map ones.\n";
+                }
+                if (!this.ValidatePlayerName())
+                {
+                    errorMessage += "The player name should be filled.\n";
+                }
+
+                MessageBox.Show(errorMessage, "Error", System.Windows.MessageBoxButton.OK);
             }
         }
     }

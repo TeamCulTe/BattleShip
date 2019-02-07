@@ -38,6 +38,13 @@ public class PlayerModel : AbstractEntity
     {
     }
 
+    public PlayerModel(string name, MapModel map)
+    {
+        this.name = name;
+        this.map = map;
+        this.targettedLocations = new List<int[]>();
+    }
+
     public PlayerModel(string name, MapModel map, ShipModel[] ships)
     {
         this.name = name;

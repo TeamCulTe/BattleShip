@@ -48,7 +48,7 @@ public class ShipFactory
     /// @param shipType The type of ship to generate.
     /// @return The generated ship.
     /// </summary>
-    public ShipModel GenerateShip(int[][] pos, ShipType shipType)
+    public static ShipModel GenerateShip(int[][] pos, ShipType shipType)
     {
         ShipSetupModel setup;
         // TODO Load the parameters depending on the ship category

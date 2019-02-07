@@ -22,7 +22,7 @@ public class MapModel : AbstractEntity
     #endregion
 
     #region Properties
-    public bool[][] Field { get => field; set => field = value; }
+    public Boolean[][] Field { get => field; set => field = value; }
     public static MapSetupModel Setup { get => setup; set => setup = value; }
     #endregion
 
@@ -32,7 +32,15 @@ public class MapModel : AbstractEntity
     /// </summary>
     public MapModel()
     {
-        // TODO Associate the setup.
+        if (MapModel.Setup != null)
+        {
+            this.field = new Boolean[MapModel.Setup.Size[0]][];
+
+            for (int j = 0; j < MapModel.Setup.Size[0]; j++)
+            {
+                this.field[j] = new Boolean[MapModel.Setup.Size[1]];
+            }
+        }
     }
 
     public MapModel(bool[][] field)

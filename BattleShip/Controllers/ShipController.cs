@@ -1,4 +1,5 @@
 
+using BattleShip.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +59,11 @@ public class ShipController
     /// </summary>
     public void DbSave(ShipModel ship)
     {
-        // TODO implement here
+        using (var dbContext = new ApplicationDbContext())
+        {
+            dbContext.ShipModels.Add(ship);
+            dbContext.SaveChanges();
+        }
     }
     #endregion
 
