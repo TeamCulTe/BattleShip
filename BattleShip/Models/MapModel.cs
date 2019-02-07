@@ -52,21 +52,26 @@ public class MapModel : AbstractEntity
     #region Functions
     public override string ToString()
     {
-        String repr = String.Format("id : {0} - field : \n[", this.Id);
+        String repr = String.Format("[MapModel] id : {0}", this.Id);
 
-        for (var i = 0; i < this.field.Length; i++)
+        if (this.Field != null)
         {
-            for (var j = 0; j < this.field[i].Length; j++)
+            repr += " - field : \n[";
+
+            for (var i = 0; i < this.Field.Length; i++)
             {
-                repr += this.field[i][j];
-
-                if (j != this.field[i].Length)
+                for (var j = 0; j < this.field[i].Length; j++)
                 {
-                    repr += " ";
-                }
-            }
+                    repr += this.field[i][j];
 
-            repr += "\n";
+                    if (j != this.field[i].Length)
+                    {
+                        repr += " ";
+                    }
+                }
+
+                repr += "\n";
+            }
         }
 
         return repr;

@@ -85,45 +85,50 @@ public class PlayerModel : AbstractEntity
 
     override public String ToString()
     {
-        String repr = String.Format("id : {0} - name = {1} - ships : [", this.Id, this.Name);
+        String repr = String.Format("[PlayerModel] id : {0} - name = {1}", this.Id, this.Name);
 
-        for (var i = 0; i < this.Ships.Length; i++)
+        if (this.Ships != null)
         {
-            repr += this.Ships[i].ToString();
+            repr += " - ships : [";
 
-            if (i == this.Ships.Length - 1)
+            for (var i = 0; i < this.Ships.Length; i++)
             {
-                repr += "] - targettedLocations : [";
+                repr += this.Ships[i].ToString();
+
+                if (i == this.Ships.Length - 1)
+                {
+                    repr += "] - targettedLocations : [";
+                }
+                else
+                {
+                    repr += ", ";
+                }
             }
-            else
-            {
-                repr += ", ";
-            }
-        }
 
-        for (var i = 0; i < this.TargettedLocations.Count; i++)
-        {
-            for (var j = 0; j < this.TargettedLocations[i].Length; j++)
+            for (var i = 0; i < this.TargettedLocations.Count; i++)
             {
-                repr += "[" + this.TargettedLocations[i][j];
+                for (var j = 0; j < this.TargettedLocations[i].Length; j++)
+                {
+                    repr += "[" + this.TargettedLocations[i][j];
 
-                if (j == this.TargettedLocations[i].Length - 1)
+                    if (j == this.TargettedLocations[i].Length - 1)
+                    {
+                        repr += "]";
+                    }
+                    else
+                    {
+                        repr += " ; ";
+                    }
+                }
+
+                if (i == this.TargettedLocations.Count - 1)
                 {
                     repr += "]";
                 }
                 else
                 {
-                    repr += " ; ";
+                    repr += ", ";
                 }
-            }
-
-            if (i == this.TargettedLocations.Count - 1)
-            {
-                repr += "]";
-            }
-            else
-            {
-                repr += ", ";
             }
         }
 

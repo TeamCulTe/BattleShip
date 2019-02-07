@@ -43,19 +43,24 @@ public class ShipSetupModel : AbstractSetup
     #region Functions
     override public String ToString()
     {
-        String repr = String.Format("id : {0} - name : {1} - shipNumber : {2} - size : [", this.Id, this.Name, this.ShipNumber);
+        String repr = String.Format("[ShipSetupModel] id : {0} - name : {1} - shipNumber : {2}", this.Id, this.Name, this.ShipNumber);
 
-        for (var i = 0; i < this.Size.Length; i++)
+        if (this.Size != null)
         {
-            repr += this.Size[i];
+            repr += " - size : [";
 
-            if (i == this.Size.Length - 1)
+            for (var i = 0; i < this.Size.Length; i++)
             {
-                repr += "]";
-            }
-            else
-            {
-                repr += ", ";
+                repr += this.Size[i];
+
+                if (i == this.Size.Length - 1)
+                {
+                    repr += "]";
+                }
+                else
+                {
+                    repr += ", ";
+                }
             }
         }
 
