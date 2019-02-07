@@ -218,7 +218,10 @@ namespace BattleShip.Views
         {
             if (this.ValidateShipFields() && this.ValidateMapFields() && this.ValidateShipTypes() && this.ValidateSizes() && this.ValidatePlayerName())
             {
-                
+                MapModel playerMap = this.InitMapModelFromInput();
+                PlacementPage page = new PlacementPage(playerMap);
+
+                (this.Parent as Window).Content = page;
             }
             else
             {
