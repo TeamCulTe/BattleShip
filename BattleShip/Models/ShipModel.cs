@@ -74,31 +74,36 @@ public class ShipModel : AbstractEntity
 
     override public String ToString()
     {
-        String repr = String.Format("id : {0} - name = {1} - damages : {2} - setups : {3} locations : [", this.Id, this.Name, this.Damages, this.Setup);
+        String repr = String.Format("[ShipModel] id : {0} - name = {1} - damages : {2} - setups : {3}", this.Id, this.Name, this.Damages, this.Setup);
 
-        for (var i = 0; i < this.Locations.Length; i++)
+        if (this.Locations != null)
         {
-            for (var j = 0; j < this.Locations[i].Length; j++)
-            {
-                repr += "[" + this.Locations[i][j];
+            repr += "locations : [";
 
-                if (j == this.Locations[i].Length - 1)
+            for (var i = 0; i < this.Locations.Length; i++)
+            {
+                for (var j = 0; j < this.Locations[i].Length; j++)
+                {
+                    repr += "[" + this.Locations[i][j];
+
+                    if (j == this.Locations[i].Length - 1)
+                    {
+                        repr += "]";
+                    }
+                    else
+                    {
+                        repr += " ; ";
+                    }
+                }
+
+                if (i == this.Locations.Length - 1)
                 {
                     repr += "]";
                 }
                 else
                 {
-                    repr += " ; ";
+                    repr += ", ";
                 }
-            }
-
-            if (i == this.Locations.Length - 1)
-            {
-                repr += "]";
-            }
-            else
-            {
-                repr += ", ";
             }
         }
 

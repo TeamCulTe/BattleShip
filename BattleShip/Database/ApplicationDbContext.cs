@@ -51,7 +51,11 @@ namespace BattleShip.Database
         #region Functions
         private void CheckDatabase()
         {
-            
+            if (!this.Database.CompatibleWithModel(false))
+            {
+                this.Database.Delete();
+                this.Database.Create();
+            }
         }
         #endregion
 

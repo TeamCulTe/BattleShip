@@ -1,6 +1,8 @@
 ﻿using BattleShip.Database;
+using BattleShip.Views;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +26,51 @@ namespace BattleShip
         public MainWindow()
         {
             InitializeComponent();
+            this.AddData();
+            this.getData();
+            this.Content = new StartUpPage();
+        }
+
+        private void getData()
+        {
+            ApplicationDbContext dbContext = new ApplicationDbContext();
+
+            dbContext.Configuration.LazyLoadingEnabled = false;
+
+            DbSet<GameModel> games = dbContext.GameModels;
+            DbSet<ShipModel> ships = dbContext.ShipModels;
+            DbSet<PlayerModel> players = dbContext.PlayerModels;
+            DbSet<AbstractSetup> setups = dbContext.AbstractSetups;
+            DbSet<MapModel> maps = dbContext.MapModels;
+
+            foreach (var elt in games)
+            {
+                Console.WriteLine(elt.ToString());
+            }
+
+            foreach (var elt in ships)
+            {
+                Console.WriteLine(elt.ToString());
+            }
+
+            foreach (var elt in players)
+            {
+                Console.WriteLine(elt.ToString());
+            }
+
+            foreach (var elt in setups)
+            {
+                Console.WriteLine(elt.ToString());
+            }
+
+            foreach (var elt in maps)
+            {
+                Console.WriteLine(elt.ToString());
+            }
+        }
+
+        private void AddData()
+        {
             ApplicationDbContext dbContext = new ApplicationDbContext();
             Boolean[][] field = new Boolean[2][];
             field[0] = new Boolean[] { true, false };
@@ -37,17 +84,20 @@ namespace BattleShip
             pos[0] = new int[] { 2, 1 };
             pos[1] = new int[] { 3, 2 };
 
+            dbContext.AbstractSetups.Add(setup);
+
             ShipModel[] ships = new ShipModel[2];
+
             for (int i = 0; i < 2; i++)
             {
                 ships[i] = new ShipModel("ship" + i, pos, setup);
             }
-        
+
             MapModel map = new MapModel(field);
             PlayerModel p = new PlayerModel("player", map, ships);
-            GameModel game = new GameModel(new PlayerModel[] {p});
+            GameModel game = new GameModel(8, new PlayerModel[1] { p });
 
-            dbContext.AbstractSetups.Add(setup);
+            
             for (int i = 0; i < 2; i++)
             {
                 dbContext.ShipModels.Add(ships[i]);
