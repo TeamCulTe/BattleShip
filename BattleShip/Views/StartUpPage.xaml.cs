@@ -26,12 +26,16 @@ namespace BattleShip.Views
         #endregion
 
         #region Variables
+       
         #endregion
 
         #region Attributes
+        
+     
         #endregion
 
         #region Properties
+
         #endregion
 
         #region Constructors
@@ -204,7 +208,7 @@ namespace BattleShip.Views
         {
             MapModel.Setup = this.InitMapSetupFromInput();
 
-            return new MapModel();
+            return new MapModel(); 
         }
 
         private PlayerModel InitPlayerFromInput()
