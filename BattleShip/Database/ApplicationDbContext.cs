@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BattleShip.Database
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext  : DbContext
     {
 
         #region StaticVariables

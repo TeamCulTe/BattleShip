@@ -14,6 +14,7 @@ public class MapController
     #endregion
 
     #region Variables
+    private Boolean flag; 
     #endregion
 
     #region Attributes
@@ -39,7 +40,7 @@ public class MapController
     /// <summary>
     /// @param map The map to save into database.
     /// </summary>
-    public void DbSave(MapModel map)
+    public void DbSave(MapModel map) 
     {
         using (var dbContext = new ApplicationDbContext())
         {
@@ -47,8 +48,32 @@ public class MapController
             dbContext.SaveChanges();
         }
     }
-    #endregion
 
-    #region Events
-    #endregion
-}
+    public Boolean CheckPlacement(MapModel map, int[] location, ShipModel ship)
+    {
+        //  int direction = 
+        //   if ( direction ==  vertical)
+        
+
+        for (int i = 0; i < ship.Setup.Size[0]; i++)
+        {
+            if (!((location[0] + 1) < ship.Setup.Size[0]))
+            {
+                flag = false; 
+            }
+        }
+     //   else if direction == horizontale 
+        for( int i = 0; i < ship.Setup.Size[1]; i++)
+        {
+            if (!((location[1] + 1) < ship.Setup.Size[1]))
+            {
+                flag = false;
+            }
+        }
+        return flag;
+    } 
+            #endregion
+
+            #region Events
+            #endregion
+        }

@@ -27,7 +27,7 @@ namespace BattleShip
         {
             InitializeComponent();
             this.AddData();
-            //this.getData();
+           // this.getData();
             this.Content = new StartUpPage();
         }
 
@@ -73,11 +73,13 @@ namespace BattleShip
 
         private void AddData()
         {
-            using (var dbContext = new ApplicationDbContext())
+            using (var db = new ApplicationDbContext())
             {
                 Boolean[][] field = new Boolean[2][];
                 field[0] = new Boolean[] { true, false };
                 field[1] = new Boolean[] { false, false };
+
+                
 
                 int[] size = new int[] { 2, 3 };
                 ShipSetupModel setup = new ShipSetupModel("setupShip", size, 3);
@@ -87,7 +89,8 @@ namespace BattleShip
                 pos[0] = new int[] { 2, 1 };
                 pos[1] = new int[] { 3, 2 };
 
-                //dbContext.AbstractSetups.Add(setup);
+                db.AbstractSetups.Add(setup);
+                db.SaveChanges();
 
                 ShipModel[] ships = new ShipModel[2];
 
@@ -95,7 +98,7 @@ namespace BattleShip
                 {
                     ships[i] = new ShipModel("ship" + i, pos, setup);
                 }
-
+                
                 MapModel map = new MapModel(field);
                 PlayerModel p = new PlayerModel("player", map, ships);
                 GameModel game = new GameModel(8, new PlayerModel[1] { p });
@@ -103,13 +106,22 @@ namespace BattleShip
 
                 for (int i = 0; i < 2; i++)
                 {
-                    //dbContext.ShipModels.Add(ships[i]);
+                    db.ShipModels.Add(ships[i]);
+                    db.SaveChanges();
                 }
-                //dbContext.MapModels.Add(map);
-                //dbContext.PlayerModels.Add(p);
-                dbContext.GameModels.Add(game);
+                
+                db.MapModels.Add(map);
+                db.SaveChanges();
+                db.PlayerModels.Add(p);
+                db.SaveChanges();
+                /*  dbContext.GameModels.Add(game);                
+                  dbContext.SaveChanges(); */
 
-                dbContext.SaveChanges();
+
+                foreach (var gameItems in db.MapModels)
+                {
+                    Console.WriteLine(gameItems.Id);
+                }
             }
         }
     }
