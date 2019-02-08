@@ -97,8 +97,8 @@ namespace BattleShip
                 }
 
                 MapModel map = new MapModel(field);
-                PlayerModel p = new PlayerModel("player", map, ships);
-                GameModel game = new GameModel(8, new PlayerModel[1] { p });
+                //PlayerModel p = new PlayerModel("player", map, ships);
+                //GameModel game = new GameModel(8, new PlayerModel[1] { p });
 
 
                 for (int i = 0; i < 2; i++)
@@ -107,7 +107,7 @@ namespace BattleShip
                 }
                 //dbContext.MapModels.Add(map);
                 //dbContext.PlayerModels.Add(p);
-                dbContext.GameModels.Add(game);
+                //dbContext.GameModels.Add(game);
 
                 dbContext.SaveChanges();
             }

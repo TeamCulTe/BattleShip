@@ -29,15 +29,21 @@
             </Grid.RowDefinitions>
         </Grid>
         <TextBlock x:Name="title" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Center" FontSize="15">Place your ships on the map.</TextBlock>
-        <TextBlock x:Name="firstShipName" Grid.Column="1" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center">First ship</TextBlock>
-        <TextBlock x:Name="secondShipName" Grid.Column="1" Grid.Row="2" TextAlignment="Center" VerticalAlignment="Center">Second ship</TextBlock>
-        <TextBlock x:Name="thirdShipName" Grid.Column="1" Grid.Row="3" TextAlignment="Center" VerticalAlignment="Center">Third ship</TextBlock>
-        <TextBlock x:Name="fourthShipName" Grid.Column="1" Grid.Row="4" TextAlignment="Center" VerticalAlignment="Center">Fourth ship</TextBlock>
-        <TextBlock x:Name="fisrtShipNumberLeft" Grid.Column="2" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center">X x left</TextBlock>
-        <TextBlock x:Name="secondShipNumberLeft" Grid.Column="2" Grid.Row="2" TextAlignment="Center" VerticalAlignment="Center">X x left</TextBlock>
-        <TextBlock x:Name="thirdShipNumberLeft" Grid.Column="2" Grid.Row="3" TextAlignment="Center" VerticalAlignment="Center">X x left</TextBlock>
-        <TextBlock x:Name="fourthShipNumberLeft" Grid.Column="2" Grid.Row="4" TextAlignment="Center" VerticalAlignment="Center">X x left</TextBlock>
-        <Button x:Name="rotateButton" Grid.Column="1" Grid.Row="5" >Rotate</Button>
+        <Button x:Name="firstShipButton" Grid.Column="1" Grid.Row="1" Click="ShipName_Click" Background="Aqua">
+            <TextBlock x:Name="firstShipName" FontSize="15">First ship</TextBlock></Button>
+        <Button x:Name="secondShipButton" Grid.Column="1" Grid.Row="2" Click="ShipName_Click"  Background="Aqua">
+            <TextBlock x:Name="secondShipName" FontSize="15">Second ship</TextBlock>
+        </Button>
+        <Button x:Name="thirdShipButton" Grid.Column="1" Grid.Row="3" Click="ShipName_Click"  Background="Aqua">
+            <TextBlock x:Name="thirdShipName" FontSize="15">Third ship</TextBlock>
+        </Button>
+        <Button x:Name="fourthShipButton" Grid.Column="1" Grid.Row="4" Click="ShipName_Click"  Background="Aqua">
+            <TextBlock x:Name="fourthShipName" FontSize="15">Fourth ship</TextBlock>
+        </Button>
+        <TextBlock x:Name="fisrtShipNumberLeft" Grid.Column="2" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <TextBlock x:Name="secondShipNumberLeft" Grid.Column="2" Grid.Row="2" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <TextBlock x:Name="thirdShipNumberLeft" Grid.Column="2" Grid.Row="3" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <TextBlock x:Name="fourthShipNumberLeft" Grid.Column="2" Grid.Row="4" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <Button x:Name="validateButton" Grid.Column="2" Grid.Row="5" >Validate</Button>
     </Grid>
 </Page>

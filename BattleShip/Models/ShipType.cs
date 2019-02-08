@@ -4,5 +4,8 @@ public enum ShipType
     CARRIER,
     SUBMARINE,
     DESTROYER,
-    BATTLESHIP
+    BATTLESHIP,
+    BIREME,
+    CARAVEL,
+    DRAKKAR
 }

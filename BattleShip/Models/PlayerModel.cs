@@ -19,14 +19,14 @@ public class PlayerModel : AbstractEntity
     #region Attributes
     private String name;
     private MapModel map;
-    private ShipModel[] ships;
+    private List<ShipModel> ships;
     private List<int[]> targettedLocations;
     #endregion
 
     #region Properties
     public string Name { get => name; set => name = value; }
     public MapModel Map { get => map; set => map = value; }
-    public ShipModel[] Ships { get => ships; set => ships = value; }
+    public List<ShipModel> Ships { get => ships; set => ships = value; }
     public List<int[]> TargettedLocations { get => targettedLocations; set => targettedLocations = value; }
     #endregion
 
@@ -42,10 +42,11 @@ public class PlayerModel : AbstractEntity
     {
         this.name = name;
         this.map = map;
+        this.ships = new List<ShipModel>();
         this.targettedLocations = new List<int[]>();
     }
 
-    public PlayerModel(string name, MapModel map, ShipModel[] ships)
+    public PlayerModel(string name, MapModel map, List<ShipModel> ships)
     {
         this.name = name;
         this.map = map;
@@ -53,7 +54,7 @@ public class PlayerModel : AbstractEntity
         this.targettedLocations = new List<int[]>();
     }
 
-    public PlayerModel(string name, MapModel map, ShipModel[] ships, List<int[]> targettedLocations)
+    public PlayerModel(string name, MapModel map, List<ShipModel> ships, List<int[]> targettedLocations)
     {
         this.name = name;
         this.map = map;
@@ -61,7 +62,7 @@ public class PlayerModel : AbstractEntity
         this.targettedLocations = targettedLocations;
     }
 
-    public PlayerModel(long id, string name, MapModel map, ShipModel[] ships, List<int[]> targettedLocations) : base(id)
+    public PlayerModel(long id, string name, MapModel map, List<ShipModel> ships, List<int[]> targettedLocations) : base(id)
     {
         this.name = name;
         this.map = map;
@@ -79,7 +80,7 @@ public class PlayerModel : AbstractEntity
     /// </summary>
     public Boolean IsAlive()
     {
-        for (var i = 0; i < this.Ships.Length; i++)
+        for (var i = 0; i < this.Ships.Count; i++)
         {
             if (this.Ships[i].IsAlive())
             {
@@ -98,11 +99,11 @@ public class PlayerModel : AbstractEntity
         {
             repr += " - ships : [";
 
-            for (var i = 0; i < this.Ships.Length; i++)
+            for (var i = 0; i < this.Ships.Count; i++)
             {
                 repr += this.Ships[i].ToString();
 
-                if (i == this.Ships.Length - 1)
+                if (i == this.Ships.Count - 1)
                 {
                     repr += "] - targettedLocations : [";
                 }

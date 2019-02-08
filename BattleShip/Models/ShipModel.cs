@@ -45,6 +45,14 @@ public class ShipModel : AbstractEntity
         this.setup = setup;
     }
 
+    public ShipModel(string name, ShipSetupModel setup)
+    {
+        this.name = name;
+        this.setup = setup;
+
+        this.InitLocations();
+    }
+
     public ShipModel(long id, string name, int[][] locations, ShipSetupModel setup) : base(id)
     {
         this.name = name;
@@ -58,6 +66,13 @@ public class ShipModel : AbstractEntity
         this.locations = locations;
         this.setup = setup;
     }
+
+    public ShipModel(ShipModel model)
+    {
+        this.name = model.Name;
+        this.locations = model.Locations;
+        this.setup = model.Setup;
+    }
     #endregion
 
     #region StaticFunctions
@@ -70,6 +85,147 @@ public class ShipModel : AbstractEntity
     public Boolean IsAlive()
     {
         return this.Damages > this.Locations.Length;
+    }
+
+    public Boolean IsPlaced()
+    {
+        for (int i = 0; i < this.locations.Length; i++)
+        {
+            for (int j = 0; j < this.locations[0].Length; j++)
+            {
+                if (this.locations[i][j] == -1)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public int GetWidth()
+    {
+        return this.setup.Size[0];
+    }
+
+    public int GetHeigh()
+    {
+        return this.setup.Size[1];
+    }
+
+    public int GetLocationIndexToDefine()
+    {
+        for (int i = 0; i < this.Locations.Length; i++)
+        {
+            if (this.Locations[i][0] == -1)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public Boolean LocationIsValid(int x, int y)
+    {
+        int currentLocation = this.GetLocationIndexToDefine();
+
+        if (currentLocation == 0)
+        {
+            return true;
+        }
+
+        Boolean valid = false;
+
+        if (currentLocation == -1 || x < 0 || y < 0)
+        {
+            return valid;
+        }
+
+        for (int i = 0; i < currentLocation; i++)
+        {
+            if (this.locations[i][0] - 1 == x || this.locations[i][0] + 1 == x)
+            {
+                if (this.locations[i][1] == y)
+                {
+                    if (!this.ReachedMaxWidth())
+                    {
+                        valid = true;
+
+                        break;
+                    }
+                }
+            }
+            else if (this.locations[i][1] - 1 == y || this.locations[i][1] + 1 == y)
+            {
+                if (this.locations[i][0] == x)
+                {
+                    if (!this.ReachedMaxWidth())
+                    {
+                        valid = true;
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        return valid;
+    }
+
+    private Boolean ReachedMaxWidth()
+    {
+        int i;
+
+        for (i = 0; i < this.locations.Length; i++)
+        {
+            if (this.locations[i][0] != (this.locations[i + 1][0] - 1) && this.locations[i][0] != (this.locations[i + 1][0] + 1))
+            {
+                break;
+            }
+        }
+
+        return i + 2 > this.GetWidth();
+    }
+
+    private Boolean ReachedMaxHeight()
+    {
+        int i;
+
+        for (i = 0; i < this.locations.Length; i++)
+        {
+            if (this.locations[i][1] != (this.locations[i + 1][1] - 1) && this.locations[i][1] != (this.locations[i + 1][1] + 1))
+            {
+                break;
+            }
+        }
+
+        return i + 2 > this.GetHeigh();
+    }
+
+    private void InitLocations()
+    {
+        int cellNumber = 1;
+
+        for (int i = 0; i < this.setup.Size.Length; i++)
+        {
+            cellNumber *= this.setup.Size[i];
+        }
+
+        this.locations = new int[cellNumber][];
+
+        for (int i = 0; i < this.locations.Length; i++)
+        {
+            this.locations[i] = new int[MapSetupModel.Dimensions];
+        }
+
+        for (int i = 0; i < this.locations.Length; i++)
+        {
+            for (int j = 0; j < this.locations[0].Length; j++)
+            {
+                this.locations[i][j] = -1;
+            }
+        }
     }
 
     override public String ToString()
