@@ -36,6 +36,23 @@ public class ShipController
     #endregion
 
     #region Functions
+    public static Boolean PlaceShip(ShipModel ship, int[] pos)
+    {
+        int indexToDefine;
+        Boolean placed = false;
+
+        if ((indexToDefine = ship.GetLocationIndexToDefine()) != -1)
+        {
+            if (ship.LocationIsValid(pos[0], pos[1]))
+            {
+                ship.Locations[indexToDefine] = pos;
+                placed = true;
+            }
+        }
+
+        return placed;
+    }
+
     /// <summary>
     /// @param ship The ship to damage.
     /// </summary>

@@ -78,9 +78,6 @@
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\SetupViewModel.cs" />
-    <Compile Include="Views\CustomMapButton.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
