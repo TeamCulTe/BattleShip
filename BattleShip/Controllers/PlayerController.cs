@@ -47,6 +47,20 @@ public class PlayerController
             dbContext.SaveChanges();
         }
     }
+
+    public static void PlaceShipsOnMap(PlayerModel player)
+    {
+        foreach (var ship in player.Ships)
+        {
+            for (int i = 0; i < ship.Locations.Length; i++)
+            {
+                int x = ship.Locations[i][0];
+                int y = ship.Locations[i][1];
+
+                player.Map.Field[x][y] = true;
+            }
+        }
+    }
     #endregion
 
     #region Events
