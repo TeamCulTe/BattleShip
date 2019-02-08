@@ -155,7 +155,7 @@ namespace BattleShip.Views
 
         private Boolean ValidatePlayerName()
         {
-            return this.playerNameValue.Text != null;
+            return this.playerNameValue.Text != "";
         }
 
         private ShipSetupModel InitShipSetupFromInput(int setupNumber)
@@ -215,6 +215,40 @@ namespace BattleShip.Views
         {
             return new PlayerModel(this.playerNameValue.Text, this.InitMapModelFromInput());
         }
+
+        private ShipModel InitShipFromInput(int shipNumber)
+        {
+            String type;
+
+            switch(shipNumber)
+            {
+                case 1:
+                    type = this.firstTypeValue.Text;
+
+                    break;
+                case 2:
+                    type = this.secondTypeValue.Text;
+
+                    break;
+                case 3:
+                    type = this.thirdTypeValue.Text;
+
+                    break;
+                case 4:
+                    type = this.fourthTypeValue.Text;
+
+                    break;
+                default:
+                    return null;
+            }
+
+            if (!Enum.TryParse(type, out ShipType ship))
+            {
+                return null;
+            }
+
+            return ShipFactory.GenerateShip(ship, this.InitShipSetupFromInput(shipNumber));
+        }
         #endregion
 
         #region Events
@@ -222,8 +256,15 @@ namespace BattleShip.Views
         {
             if (this.ValidateShipFields() && this.ValidateMapFields() && this.ValidateShipTypes() && this.ValidateSizes() && this.ValidatePlayerName())
             {
-                MapModel playerMap = this.InitMapModelFromInput();
-                PlacementPage page = new PlacementPage(playerMap);
+                PlayerModel player = this.InitPlayerFromInput();
+                ShipModel[] ships = new ShipModel[4];
+
+                for (int i = 0; i < ships.Length; i++)
+                {
+                    ships[i] = this.InitShipFromInput(i + 1);
+                }
+
+                PlacementPage page = new PlacementPage(player, ships);
 
                 (this.Parent as Window).Content = page;
             }
