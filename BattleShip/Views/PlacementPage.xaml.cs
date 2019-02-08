@@ -84,6 +84,18 @@ namespace BattleShip.Views
             this.fourthShipNumberLeft.Text = String.Format(FORMAT, this.Ships[3].Setup.ShipNumber);
         }
 
+        private Boolean AllShipPlaced()
+        {
+            int shipToBePlaced = 0;
+
+            for (int i = 0; i < this.ships.Length; i++)
+            {
+                shipToBePlaced += this.ships[i].Setup.ShipNumber;
+            }
+
+            return this.player.Ships.Count == shipToBePlaced;
+        }
+
         private void OnShipPlaced()
         {
             if (currentShip != null)
@@ -137,6 +149,12 @@ namespace BattleShip.Views
                 else
                 {
                     this.currentShip = ShipFactory.GenerateUnplacedCopy(this.currentShip);
+                }
+
+                if (this.AllShipPlaced())
+                {
+                    PlayerController.PlaceShipsOnMap(this.player);
+                    MessageBox.Show("All ship have been placed, you can now click on validate to start the game.", "Info", System.Windows.MessageBoxButton.OK);
                 }
             }
         }
@@ -262,7 +280,14 @@ namespace BattleShip.Views
                 }
             }
         }
-        #endregion
 
+        private void ValidateButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!this.AllShipPlaced())
+            {
+                MessageBox.Show("All ships should be placed to start the game.", "Error", System.Windows.MessageBoxButton.OK);
+            }
+        }
+        #endregion
     }
 }
