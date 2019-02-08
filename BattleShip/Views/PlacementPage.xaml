@@ -44,6 +44,6 @@
         <TextBlock x:Name="secondShipNumberLeft" Grid.Column="2" Grid.Row="2" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <TextBlock x:Name="thirdShipNumberLeft" Grid.Column="2" Grid.Row="3" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <TextBlock x:Name="fourthShipNumberLeft" Grid.Column="2" Grid.Row="4" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        <Button x:Name="validateButton" Grid.Column="2" Grid.Row="5" >Validate</Button>
+        <Button x:Name="validateButton" Grid.Column="2" Grid.Row="5" Click="ValidateButton_Click">Validate</Button>
     </Grid>
 </Page>

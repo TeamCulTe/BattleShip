@@ -74,10 +74,6 @@
     <Compile Include="Database\ApplicationDbContext.cs" />
     <Compile Include="Models\AbstractEntity.cs" />
     <Compile Include="Utils\ShipFactory.cs" />
-    <Compile Include="ViewModels\GameViewModel.cs" />
-    <Compile Include="ViewModels\MapViewModel.cs" />
-    <Compile Include="ViewModels\PlayerViewModel.cs" />
-    <Compile Include="ViewModels\SetupViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

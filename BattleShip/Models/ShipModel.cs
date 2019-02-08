@@ -160,7 +160,7 @@ public class ShipModel : AbstractEntity
             {
                 if (this.locations[i][0] == x)
                 {
-                    if (!this.ReachedMaxWidth())
+                    if (!this.ReachedMaxHeight())
                     {
                         valid = true;
 
