@@ -38,10 +38,10 @@ public class ShipController
     #region Functions
     public static Boolean PlaceShip(ShipModel ship, int[] pos)
     {
-        int indexToDefine;
+        int indexToDefine = ship.GetLocationIndexToDefine();
         Boolean placed = false;
 
-        if ((indexToDefine = ship.GetLocationIndexToDefine()) != -1)
+        if (indexToDefine != -1)
         {
             if (ship.LocationIsValid(pos[0], pos[1]))
             {
@@ -51,6 +51,26 @@ public class ShipController
         }
 
         return placed;
+    }
+
+    public static ShipModel PlaceShipRandomly(ShipModel ship)
+    {
+        List<int[]> positions = null;
+
+        while (positions == null)
+        {
+            positions = ship.GetValidPositions();
+
+            if (positions != null)
+            {
+                foreach (var position in positions)
+                {
+                    ShipController.PlaceShip(ship, position);
+                }
+            }
+        }
+
+        return ship;
     }
 
     /// <summary>
