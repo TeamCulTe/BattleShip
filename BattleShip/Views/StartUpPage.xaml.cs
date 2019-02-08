@@ -26,16 +26,12 @@ namespace BattleShip.Views
         #endregion
 
         #region Variables
-       
         #endregion
 
         #region Attributes
-        
-     
         #endregion
 
         #region Properties
-
         #endregion
 
         #region Constructors
@@ -181,7 +177,7 @@ namespace BattleShip.Views
                 case 3:
                     name = this.thirdTypeValue.SelectedItem.ToString();
                     size = new int[] { int.Parse(this.thirdShipXSizeValue.Text), int.Parse(this.thirdShipYSizeValue.Text) };
-                    shipNumber = int.Parse(this.firstShipNumberValue.Text);
+                    shipNumber = int.Parse(this.thirdShipNumberValue.Text);
 
                     break;
                 case 4:
@@ -208,7 +204,7 @@ namespace BattleShip.Views
         {
             MapModel.Setup = this.InitMapSetupFromInput();
 
-            return new MapModel(); 
+            return new MapModel();
         }
 
         private PlayerModel InitPlayerFromInput()

@@ -160,7 +160,7 @@ public class ShipModel : AbstractEntity
             {
                 if (this.locations[i][0] == x)
                 {
-                    if (!this.ReachedMaxWidth())
+                    if (!this.ReachedMaxHeight())
                     {
                         valid = true;
 
@@ -173,11 +173,37 @@ public class ShipModel : AbstractEntity
         return valid;
     }
 
+    public List<int[]> GetValidPositions()
+    {
+        List<int[]> positions = new List<int[]>();
+        Random rdm = new Random();
+        int[] rdmPos = MapModel.GetRandomPoints();
+        int firstAxisRdmDirection = (rdm.Next(2) == 0) ? -1 : 1;
+        int secondAxisRdmDirecton = (rdm.Next(2) == 0) ? -1 : 1;
+        int rdmAxis = rdm.Next(2);
+        int otherAxis = (rdmAxis == 0) ? 1 : 0;
+
+        for (int i = rdmPos[rdmAxis]; i != rdmPos[rdmAxis] + (this.Setup.Size[rdmAxis] * firstAxisRdmDirection); i += firstAxisRdmDirection)
+        {
+            for (int j = rdmPos[otherAxis]; j != rdmPos[otherAxis] + (secondAxisRdmDirecton * this.Setup.Size[otherAxis]); j += secondAxisRdmDirecton)
+            {
+                if (!this.LocationIsValid(i, j))
+                {
+                    return null;
+                }
+
+                positions.Add(new int[] { i, j });
+            }
+        }
+
+        return positions;
+    }
+
     private Boolean ReachedMaxWidth()
     {
         int i;
 
-        for (i = 0; i < this.locations.Length; i++)
+        for (i = 0; i < this.locations.Length - 1; i++)
         {
             if (this.locations[i][0] != (this.locations[i + 1][0] - 1) && this.locations[i][0] != (this.locations[i + 1][0] + 1))
             {
@@ -192,7 +218,7 @@ public class ShipModel : AbstractEntity
     {
         int i;
 
-        for (i = 0; i < this.locations.Length; i++)
+        for (i = 0; i < this.locations.Length - 1; i++)
         {
             if (this.locations[i][1] != (this.locations[i + 1][1] - 1) && this.locations[i][1] != (this.locations[i + 1][1] + 1))
             {

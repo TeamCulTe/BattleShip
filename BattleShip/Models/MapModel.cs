@@ -2,7 +2,6 @@
 using BattleShip.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -19,29 +18,11 @@ public class MapModel : AbstractEntity
     #endregion
 
     #region Attributes
-    
     private Boolean[][] field;
     #endregion
 
     #region Properties
-    public Boolean[][] Field {
-        get
-        {
-            
-            return field;
-        }
-        set
-        {
-            field = value;
-            Char separator = '|';
-            foreach (var item in value)
-            {
-                string.Join(",", item.Select(b => b ? '1' : '0'));
-             //   += separator;
-            }
-            
-        }
-    }
+    public Boolean[][] Field { get => field; set => field = value; }
     public static MapSetupModel Setup { get => setup; set => setup = value; }
     #endregion
 
@@ -51,15 +32,15 @@ public class MapModel : AbstractEntity
     /// </summary>
     public MapModel()
     {
-          if (MapModel.Setup != null)
-          {
-              this.field = new Boolean[MapModel.Setup.Size[0]][];
+        if (MapModel.Setup != null)
+        {
+            this.field = new Boolean[MapModel.Setup.Size[0]][];
 
-              for (int j = 0; j < MapModel.Setup.Size[0]; j++)
-              {
-                  this.field[j] = new Boolean[MapModel.Setup.Size[1]];
-              }   
-          }  
+            for (int j = 0; j < MapModel.Setup.Size[0]; j++)
+            {
+                this.field[j] = new Boolean[MapModel.Setup.Size[1]];
+            }
+        }
     }
 
     public MapModel(bool[][] field)
@@ -102,6 +83,20 @@ public class MapModel : AbstractEntity
         }
 
         return repr;
+    }
+
+    public static int[] GetRandomPoints()
+    {
+        if (MapModel.Setup == null)
+        {
+            return null;
+        }
+        else
+        {
+            Random rdm = new Random();
+
+            return new int[] { rdm.Next(MapModel.Setup.Size[0]), rdm.Next(MapModel.Setup.Size[1]) };
+        }
     }
     #endregion
 

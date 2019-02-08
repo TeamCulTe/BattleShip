@@ -61,6 +61,24 @@ public class PlayerController
             }
         }
     }
+
+
+    public static PlayerModel GenerateIAPlayer(PlayerModel model)
+    {
+        PlayerModel computer = new PlayerModel("Computer", new MapModel());
+
+        foreach (var ship in model.Ships)
+        {
+            computer.Ships.Add(ShipFactory.GenerateUnplacedCopy(ship));
+        }
+
+        foreach (var ship in computer.Ships)
+        {
+            ShipController.PlaceShipRandomly(ship); 
+        }
+
+        return computer;
+    }
     #endregion
 
     #region Events

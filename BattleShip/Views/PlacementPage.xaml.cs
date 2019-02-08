@@ -287,6 +287,10 @@ namespace BattleShip.Views
             {
                 MessageBox.Show("All ships should be placed to start the game.", "Error", System.Windows.MessageBoxButton.OK);
             }
+            else
+            {
+                PlayerModel computer = PlayerController.GenerateIAPlayer(this.player);
+            }
         }
         #endregion
     }
