@@ -60,30 +60,30 @@ namespace BattleShip.Views
             }
         }
 
-        private Boolean IsNumberField(TextBox textBox)
+        private Boolean IsPositiveNumberField(TextBox textBox)
         {
             if (!int.TryParse(textBox.Text, out int nb))
             {
                 return false;
             }
 
-            return true;
+            return nb > 0;
         }
 
         private Boolean ValidateShipFields()
         {
-            Boolean valid = this.IsNumberField(this.firstShipNumberValue) &&
-                this.IsNumberField(this.secondShipNumberValue) &&
-                this.IsNumberField(this.thirdShipNumberValue) &&
-                this.IsNumberField(this.fourthShipNumberValue) &&
-                this.IsNumberField(this.firstShipXSizeValue) &&
-                this.IsNumberField(this.secondShipXSizeValue) &&
-                this.IsNumberField(this.thirdShipXSizeValue) &&
-                this.IsNumberField(this.fourthShipXSizeValue) &&
-                this.IsNumberField(this.firstShipYSizeValue) &&
-                this.IsNumberField(this.secondShipYSizeValue) &&
-                this.IsNumberField(this.thirdShipYSizeValue) &&
-                this.IsNumberField(this.fourthShipYSizeValue);
+            Boolean valid = this.IsPositiveNumberField(this.firstShipNumberValue) &&
+                this.IsPositiveNumberField(this.secondShipNumberValue) &&
+                this.IsPositiveNumberField(this.thirdShipNumberValue) &&
+                this.IsPositiveNumberField(this.fourthShipNumberValue) &&
+                this.IsPositiveNumberField(this.firstShipXSizeValue) &&
+                this.IsPositiveNumberField(this.secondShipXSizeValue) &&
+                this.IsPositiveNumberField(this.thirdShipXSizeValue) &&
+                this.IsPositiveNumberField(this.fourthShipXSizeValue) &&
+                this.IsPositiveNumberField(this.firstShipYSizeValue) &&
+                this.IsPositiveNumberField(this.secondShipYSizeValue) &&
+                this.IsPositiveNumberField(this.thirdShipYSizeValue) &&
+                this.IsPositiveNumberField(this.fourthShipYSizeValue);
 
             return valid;
         }
@@ -118,7 +118,7 @@ namespace BattleShip.Views
 
         private Boolean ValidateMapFields()
         {
-            return this.IsNumberField(this.mapXSizeValue) && this.IsNumberField(this.mapYSizeValue);
+            return this.IsPositiveNumberField(this.mapXSizeValue) && this.IsPositiveNumberField(this.mapYSizeValue);
         }
 
         private Boolean ValidateSizes()
@@ -270,11 +270,11 @@ namespace BattleShip.Views
 
                 if (!this.ValidateShipFields())
                 {
-                    errorMessage += "The ship fields must only contains numbers.\n";
+                    errorMessage += "The ship fields must only contains numbers above 0.\n";
                 }
                 if (!this.ValidateMapFields())
                 {
-                    errorMessage += "The map fields must only contains numbers.\n";
+                    errorMessage += "The map fields must only contains numbers above 0.\n";
                 }
                 if (!this.ValidateShipTypes())
                 {

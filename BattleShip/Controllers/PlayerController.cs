@@ -71,11 +71,9 @@ public class PlayerController
         {
             computer.Ships.Add(ShipFactory.GenerateUnplacedCopy(ship));
         }
-
-        foreach (var ship in computer.Ships)
-        {
-            ShipController.PlaceShipRandomly(ship); 
-        }
+ 
+        ShipController.PlaceAllShipsRandomly(computer.Ships);
+        PlayerController.PlaceShipsOnMap(computer);
 
         return computer;
     }

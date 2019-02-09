@@ -11,6 +11,8 @@ public class ShipModel : AbstractEntity
     #endregion
 
     #region Constants
+    private const int WIDTH = 0;
+    private const int HEIGHT = 1;
     #endregion
 
     #region Variables
@@ -79,9 +81,6 @@ public class ShipModel : AbstractEntity
     #endregion
 
     #region Functions
-    /// <summary>
-    /// @return True if the ship isn't destroyed else false.
-    /// </summary>
     public Boolean IsAlive()
     {
         return this.Damages > this.Locations.Length;
@@ -103,14 +102,14 @@ public class ShipModel : AbstractEntity
         return true;
     }
 
-    public int GetWidth()
+    public int GetSize(int dimension)
     {
-        return this.setup.Size[0];
-    }
+        if (dimension != 1 && dimension != 0)
+        {
+            throw new Exception("ValueError : The parameter should be an int between 0 and 1.");
+        }
 
-    public int GetHeigh()
-    {
-        return this.setup.Size[1];
+        return this.setup.Size[dimension];
     }
 
     public int GetLocationIndexToDefine()
@@ -137,10 +136,12 @@ public class ShipModel : AbstractEntity
 
         Boolean valid = false;
 
-        if (currentLocation == -1 || x < 0 || y < 0)
+        if (currentLocation == -1)
         {
             return valid;
         }
+
+        int[] pos = new int[] { x, y };
 
         for (int i = 0; i < currentLocation; i++)
         {
@@ -148,7 +149,7 @@ public class ShipModel : AbstractEntity
             {
                 if (this.locations[i][1] == y)
                 {
-                    if (!this.ReachedMaxWidth())
+                    if (!this.IsReachingMax(WIDTH, pos))
                     {
                         valid = true;
 
@@ -160,7 +161,7 @@ public class ShipModel : AbstractEntity
             {
                 if (this.locations[i][0] == x)
                 {
-                    if (!this.ReachedMaxHeight())
+                    if (!this.IsReachingMax(HEIGHT, pos))
                     {
                         valid = true;
 
@@ -173,6 +174,24 @@ public class ShipModel : AbstractEntity
         return valid;
     }
 
+    public Boolean ContainsLocation(int[] location)
+    {
+        for (int i = 0; i < this.locations.Length; i++)
+        {
+            if (this.locations[i][0] == -1)
+            {
+                continue;
+            }
+
+            if (location.SequenceEqual(this.locations[i]))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public List<int[]> GetValidPositions()
     {
         List<int[]> positions = new List<int[]>();
@@ -182,16 +201,19 @@ public class ShipModel : AbstractEntity
         int secondAxisRdmDirecton = (rdm.Next(2) == 0) ? -1 : 1;
         int rdmAxis = rdm.Next(2);
         int otherAxis = (rdmAxis == 0) ? 1 : 0;
+        int iStop = rdmPos[rdmAxis] + (this.Setup.Size[rdmAxis] * firstAxisRdmDirection);
+        int jStop = rdmPos[otherAxis] + (this.Setup.Size[otherAxis] * secondAxisRdmDirecton);
 
-        for (int i = rdmPos[rdmAxis]; i != rdmPos[rdmAxis] + (this.Setup.Size[rdmAxis] * firstAxisRdmDirection); i += firstAxisRdmDirection)
+        if (iStop - firstAxisRdmDirection >= MapModel.Setup.Size[0] || iStop - firstAxisRdmDirection < 0 || 
+            jStop - secondAxisRdmDirecton >= MapModel.Setup.Size[1] || jStop - secondAxisRdmDirecton < 0)
         {
-            for (int j = rdmPos[otherAxis]; j != rdmPos[otherAxis] + (secondAxisRdmDirecton * this.Setup.Size[otherAxis]); j += secondAxisRdmDirecton)
+            return null;
+        }
+        //Test here that rdm pos +/- size * offset > 0 && < map.size
+        for (int i = rdmPos[rdmAxis]; i != iStop; i += firstAxisRdmDirection)
+        {
+            for (int j = rdmPos[otherAxis]; j != jStop; j += secondAxisRdmDirecton)
             {
-                if (!this.LocationIsValid(i, j))
-                {
-                    return null;
-                }
-
                 positions.Add(new int[] { i, j });
             }
         }
@@ -199,34 +221,42 @@ public class ShipModel : AbstractEntity
         return positions;
     }
 
-    private Boolean ReachedMaxWidth()
+    private int LocationsSet()
     {
-        int i;
+        int result = 0;
 
-        for (i = 0; i < this.locations.Length - 1; i++)
+        for (int i = 0; i < this.locations.Length; i++)
         {
-            if (this.locations[i][0] != (this.locations[i + 1][0] - 1) && this.locations[i][0] != (this.locations[i + 1][0] + 1))
+            if (this.locations[i][0] != -1)
             {
-                break;
+                result += 1;
             }
         }
 
-        return i + 2 > this.GetWidth();
+        return result;
     }
 
-    private Boolean ReachedMaxHeight()
+    private Boolean IsReachingMax(int dimension, int[] position)
     {
-        int i;
-
-        for (i = 0; i < this.locations.Length - 1; i++)
+        if (dimension != 1 && dimension != 0)
         {
-            if (this.locations[i][1] != (this.locations[i + 1][1] - 1) && this.locations[i][1] != (this.locations[i + 1][1] + 1))
-            {
-                break;
-            }
+            throw new Exception("ValueError : The parameter should be an int between 0 and 1.");
         }
 
-        return i + 2 > this.GetHeigh();
+        int maxLocNumber = this.LocationsSet() + 1;
+        int[] sameDimensionPoints = new int[maxLocNumber];
+        int i;
+
+        for (i = 0; i < maxLocNumber - 1; i ++)
+        {
+            sameDimensionPoints[i] = this.locations[i][dimension];
+        }
+
+        sameDimensionPoints[i] = position[dimension];
+
+        int max = this.GetSize(dimension);
+
+        return sameDimensionPoints.Distinct().Count() > max;
     }
 
     private void InitLocations()

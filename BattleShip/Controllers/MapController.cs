@@ -72,8 +72,8 @@ public class MapController
         }
         return flag;
     } 
-            #endregion
+    #endregion
 
-            #region Events
-            #endregion
-        }
+    #region Events
+    #endregion
+}

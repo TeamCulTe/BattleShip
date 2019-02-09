@@ -53,7 +53,7 @@ public class ShipController
         return placed;
     }
 
-    public static ShipModel PlaceShipRandomly(ShipModel ship)
+    public static void PlaceShipRandomly(ShipModel ship)
     {
         List<int[]> positions = null;
 
@@ -70,7 +70,46 @@ public class ShipController
             }
         }
 
-        return ship;
+        //return ship;
+    }
+
+    public static void PlaceAllShipsRandomly(List<ShipModel> ships)
+    {
+        foreach (var ship in ships)
+        {
+            List<int[]> positions = null;
+
+            while (!ship.IsPlaced())
+            {
+                positions = ship.GetValidPositions();
+
+                if (positions == null || !ShipController.PositionsAreNotTaken(positions, ships))
+                {
+                    continue;
+                }
+
+                foreach (var position in positions)
+                {
+                    ship.Locations[ship.GetLocationIndexToDefine()] = position;
+                }
+            }
+        }
+    }
+
+    public static Boolean PositionsAreNotTaken(List<int[]> positions, List<ShipModel> ships)
+    {
+        foreach (var ship in ships)
+        {
+            foreach (var position in positions)
+            {
+                if (ship.ContainsLocation(position))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
