@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BattleShip.Database.ApplicationDbContext">
+    <Position X="17.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIAAAAAAAEAQAAAAEAAAAAAAAAAgAAAAKAEAAEiBAAA=</HashCode>
+      <FileName>Database\ApplicationDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattleShip.Database.DTO.ShipSetupDTO">
+    <Position X="8.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Database\DTO\ShipSetupDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattleShip.Database.DTO.ShipDTO">
+    <Position X="13.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAgEAAIAAAQCAAAEAAAABAAAAAQAAAA=</HashCode>
+      <FileName>Database\DTO\ShipDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattleShip.Database.DTO.PlayerDTO">
+    <Position X="4.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAEAAAABAQAAAEEAgAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Database\DTO\PlayerDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattleShip.Database.DTO.MapSetupDTO">
+    <Position X="11.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAgAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Database\DTO\MapSetupDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattleShip.Database.DTO.MapDTO">
+    <Position X="15.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAACAAAAAgEAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Database\DTO\MapDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattleShip.Database.DTO.GameDTO">
+    <Position X="6.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIEAAACAAAAEAAAABABAAAAAQAAAAA=</HashCode>
+      <FileName>Database\DTO\GameDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattleShip.Database.DTO.AbstractSetupDTO">
+    <Position X="10" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAIAAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Database\DTO\AbstractSetupDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BattleShip.Database.DTO.AbstractEntityDTO">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Database\DTO\AbstractEntityDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
