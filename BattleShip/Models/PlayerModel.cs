@@ -1,11 +1,10 @@
 
-using BattleShip.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class PlayerModel : AbstractEntity
+public class PlayerModel
 {
     #region StaticVariables
     #endregion
@@ -31,9 +30,6 @@ public class PlayerModel : AbstractEntity
     #endregion
 
     #region Constructors
-    /// <summary>
-    /// Default constructor.
-    /// </summary>
     public PlayerModel()
     {
     }
@@ -61,23 +57,12 @@ public class PlayerModel : AbstractEntity
         this.ships = ships;
         this.targettedLocations = targettedLocations;
     }
-
-    public PlayerModel(long id, string name, MapModel map, List<ShipModel> ships, List<int[]> targettedLocations) : base(id)
-    {
-        this.name = name;
-        this.map = map;
-        this.ships = ships;
-        this.targettedLocations = targettedLocations;
-    }
     #endregion
 
     #region StaticFunctions
     #endregion
 
     #region Functions
-    /// <summary>
-    /// @return True if the player have no ships left.
-    /// </summary>
     public Boolean IsAlive()
     {
         for (var i = 0; i < this.Ships.Count; i++)
@@ -89,58 +74,6 @@ public class PlayerModel : AbstractEntity
         }
 
         return false;
-    }
-
-    override public String ToString()
-    {
-        String repr = String.Format("[PlayerModel] id : {0} - name = {1}", this.Id, this.Name);
-
-        if (this.Ships != null)
-        {
-            repr += " - ships : [";
-
-            for (var i = 0; i < this.Ships.Count; i++)
-            {
-                repr += this.Ships[i].ToString();
-
-                if (i == this.Ships.Count - 1)
-                {
-                    repr += "] - targettedLocations : [";
-                }
-                else
-                {
-                    repr += ", ";
-                }
-            }
-
-            for (var i = 0; i < this.TargettedLocations.Count; i++)
-            {
-                for (var j = 0; j < this.TargettedLocations[i].Length; j++)
-                {
-                    repr += "[" + this.TargettedLocations[i][j];
-
-                    if (j == this.TargettedLocations[i].Length - 1)
-                    {
-                        repr += "]";
-                    }
-                    else
-                    {
-                        repr += " ; ";
-                    }
-                }
-
-                if (i == this.TargettedLocations.Count - 1)
-                {
-                    repr += "]";
-                }
-                else
-                {
-                    repr += ", ";
-                }
-            }
-        }
-
-        return repr;
     }
     #endregion
 

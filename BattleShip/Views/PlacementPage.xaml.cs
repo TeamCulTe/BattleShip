@@ -46,9 +46,6 @@ namespace BattleShip.Views
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
         public PlacementPage()
         {
             InitializeComponent();
@@ -99,6 +96,7 @@ namespace BattleShip.Views
             else
             {
                 current.SetShipImage();
+                current.mapButton.IsEnabled = false;
 
                 if (this.currentShip.IsPlaced())
                 {
@@ -196,6 +194,12 @@ namespace BattleShip.Views
             else
             {
                 PlayerModel computer = PlayerController.GenerateIAPlayer(this.player);
+
+                MapController.DbSave(this.player.Map);
+                MapController.DbSave(computer.Map);
+                PlayerController.DbSave(this.Player);
+                PlayerController.DbSave(computer);
+
                 MainPage page = new MainPage(this.Player, computer);
 
                 (this.Parent as Window).Content = page;

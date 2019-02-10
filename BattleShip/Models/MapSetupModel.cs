@@ -24,9 +24,6 @@ public class MapSetupModel : AbstractSetup
     #endregion
 
     #region Constructors
-    /// <summary>
-    /// Default constructor.
-    /// </summary>
     public MapSetupModel()
     {
 
@@ -45,31 +42,6 @@ public class MapSetupModel : AbstractSetup
     #endregion
 
     #region Functions
-    override public String ToString()
-    {
-        String repr = String.Format("[MapSetupModel] id : {0} - name : {1} - dimensions : {2}", this.Id, this.Name, MapSetupModel.Dimensions);
-
-        if (this.Size != null)
-        {
-            repr += " - size : [";
-
-            for (var i = 0; i < this.Size.Length; i++)
-            {
-                repr += this.Size[i];
-
-                if (i == this.Size.Length - 1)
-                {
-                    repr += "]";
-                }
-                else
-                {
-                    repr += ", ";
-                }
-            }
-        }
-
-        return repr;
-    }
     #endregion
 
     #region Events

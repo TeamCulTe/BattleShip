@@ -1,5 +1,6 @@
 
 using BattleShip.Database;
+using BattleShip.Database.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,8 +70,6 @@ public class ShipController
                 }
             }
         }
-
-        //return ship;
     }
 
     public static void PlaceAllShipsRandomly(List<ShipModel> ships)
@@ -112,33 +111,33 @@ public class ShipController
         return true;
     }
 
-    /// <summary>
-    /// @param ship The ship to damage.
-    /// </summary>
-    public void DamageShip(ShipModel ship)
+    public static void DamageShip(ShipModel ship)
     {
-        // TODO implement here
+        ship.Damages += 1;
     }
 
-    /// <summary>
-    /// @param pos The positions from which getting the ship.
-    /// @return
-    /// </summary>
-    public ShipModel GetShipAtLocation(int[] pos)
+    public static ShipModel GetShipAtLocation(int[] pos, List<ShipModel> ships)
     {
-        // TODO See where to store the list of ships.
+        foreach (var ship in ships)
+        {
+            for (int i = 0; i < ship.Locations.Length; i++)
+            {
+                if (ship.Locations[i][0] == pos[0] && ship.Locations[i][1] == pos[1])
+                {
+                    return ship;
+                }
+            }
+        }
+
         return null;
     }
 
-    /// <summary>
-    /// @param ship The ship to save into the database.
-    /// </summary>
-    public void DbSave(ShipModel ship)
+    public static void DbSave(ShipModel ship)
     {
-        using (var dbContext = new ApplicationDbContext())
+        using (var db = new ApplicationDbContext())
         {
-            dbContext.ShipModels.Add(ship);
-            dbContext.SaveChanges();
+            db.Ships.Add(new ShipDTO(ship));
+            db.SaveChanges();
         }
     }
     #endregion

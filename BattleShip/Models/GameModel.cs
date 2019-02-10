@@ -1,11 +1,10 @@
 
-using BattleShip.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class GameModel : AbstractEntity
+public class GameModel
 {
     #region StaticVariables
     #endregion
@@ -27,9 +26,6 @@ public class GameModel : AbstractEntity
     #endregion
 
     #region Constructors
-    /// <summary>
-    /// Default constructor.
-    /// </summary>
     public GameModel()
     {
 
@@ -45,42 +41,12 @@ public class GameModel : AbstractEntity
         this.Turn = turn;
         this.Players = players;
     }
-
-    public GameModel(long id, int turn, PlayerModel[] players) : base(id)
-    {
-        this.Turn = turn;
-        this.Players = players;
-    }
     #endregion
 
     #region StaticFunctions
     #endregion
 
     #region Functions
-    public override string ToString()
-    {
-        String repr = String.Format("id : {0} - turn : {1}", this.Id, this.Turn);
-
-        if (this.Players != null)
-        {
-            repr += "-players : [";
-
-            for (var i = 0; i < this.Players.Length; i++)
-            {
-                repr += this.Players[i].ToString();
-
-                if (i == this.Players.Length - 1)
-                {
-                    repr += "]";
-                }
-                else
-                {
-                    repr += ", ";
-                }
-            }
-        }
-        return repr;
-    }
     #endregion
 
     #region Events

@@ -72,7 +72,14 @@
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\ShipController.cs" />
     <Compile Include="Database\ApplicationDbContext.cs" />
-    <Compile Include="Models\AbstractEntity.cs" />
+    <Compile Include="Database\DTO\AbstractEntityDTO.cs" />
+    <Compile Include="Database\DTO\GameDTO.cs" />
+    <Compile Include="Database\DTO\MapDTO.cs" />
+    <Compile Include="Database\DTO\AbstractSetupDTO.cs" />
+    <Compile Include="Database\DTO\PlayerDTO.cs" />
+    <Compile Include="Database\DTO\ShipDTO.cs" />
+    <Compile Include="Database\DTO\MapSetupDTO.cs" />
+    <Compile Include="Database\DTO\ShipSetupDTO.cs" />
     <Compile Include="UserControls\CustomMapButton.xaml.cs">
       <DependentUpon>CustomMapButton.xaml</DependentUpon>
     </Compile>
@@ -167,14 +174,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WorkLog.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Resources\denis_ha.wav" />
+    <Resource Include="Resources\fire.png" />
+    <Resource Include="Resources\redCross.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\ship.jpg" />
     <Resource Include="Resources\water.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

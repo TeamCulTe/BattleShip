@@ -1,5 +1,0 @@
-﻿- See if setup are constants or just static.
-- At the end of the project see read only properties.
-- Create custom User controls
-- Use databinding
-- Fix database issues and add DTOs.

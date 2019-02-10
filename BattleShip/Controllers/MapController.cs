@@ -1,5 +1,6 @@
 
 using BattleShip.Database;
+using BattleShip.Database.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,41 +38,14 @@ public class MapController
     #endregion
 
     #region Functions
-    /// <summary>
-    /// @param map The map to save into database.
-    /// </summary>
-    public void DbSave(MapModel map) 
+    public static void DbSave(MapModel map) 
     {
-        using (var dbContext = new ApplicationDbContext())
+        using (var db = new ApplicationDbContext())
         {
-            dbContext.MapModels.Add(map);
-            dbContext.SaveChanges();
+            db.Maps.Add(new MapDTO(map));
+            db.SaveChanges();
         }
     }
-
-    public Boolean CheckPlacement(MapModel map, int[] location, ShipModel ship)
-    {
-        //  int direction = 
-        //   if ( direction ==  vertical)
-        
-
-        for (int i = 0; i < ship.Setup.Size[0]; i++)
-        {
-            if (!((location[0] + 1) < ship.Setup.Size[0]))
-            {
-                flag = false; 
-            }
-        }
-     //   else if direction == horizontale 
-        for( int i = 0; i < ship.Setup.Size[1]; i++)
-        {
-            if (!((location[1] + 1) < ship.Setup.Size[1]))
-            {
-                flag = false;
-            }
-        }
-        return flag;
-    } 
     #endregion
 
     #region Events

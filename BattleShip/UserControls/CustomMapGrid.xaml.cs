@@ -25,7 +25,7 @@ namespace BattleShip.UserControls
         #endregion
 
         #region Constants
-        #endregion
+        #endregion 
 
         #region Variables
         #endregion
@@ -67,6 +67,11 @@ namespace BattleShip.UserControls
         #endregion
 
         #region Functions
+        public UIElement GetItemAtPosition(int[] position)
+        {
+            return this.field.Children.Cast<UIElement>().First(e => Grid.GetRow(e) == position[1] && Grid.GetColumn(e) == position[0]);
+        }
+
         public void PopulateMap()
         {
             for (int row = 0; row < this.Map.Field.Length; row++)
@@ -89,7 +94,7 @@ namespace BattleShip.UserControls
             }
         }
 
-        public void PopulateGameMap()
+        public void PopulateGameMap(Boolean hidden)
         {
             for (int row = 0; row < this.Map.Field.Length; row++)
             {
@@ -101,8 +106,20 @@ namespace BattleShip.UserControls
                     button.X = col;
                     button.Y = row;
 
-                    button.mapButton.Click += new RoutedEventHandler(GameMapButton_Click);
+                    if (hidden)
+                    {
+                        button.mapButton.Click += new RoutedEventHandler(GameMapButton_Click);
+                    }
+                    else
+                    {
+                        button.IsEnabled = false;
 
+                        if (this.Map.Field[row][col] == true)
+                        {
+                            button.SetShipImage();
+                        }
+                    }
+                    
                     this.field.Children.Add(button);
 
                     Grid.SetRow(button, row);
@@ -110,6 +127,7 @@ namespace BattleShip.UserControls
                 }
             }
         }
+
         private void GenerateViewMap()
         {
             this.field.ShowGridLines = true;
@@ -141,8 +159,14 @@ namespace BattleShip.UserControls
 
             if (this.map.Field[button.X][button.Y] == true)
             {
-                button.SetShipImage();
+                button.SetFireImage();
             }
+            else
+            {
+                button.SetMissedImage();
+            }
+
+            this.listener.NotifyButtonClicked(button, e);
         }
         #endregion
 

@@ -1,11 +1,10 @@
 
-using BattleShip.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class ShipModel : AbstractEntity
+public class ShipModel
 {
     #region StaticVariables
     #endregion
@@ -33,9 +32,6 @@ public class ShipModel : AbstractEntity
     #endregion
 
     #region Constructors
-    /// <summary>
-    /// Default constructor.
-    /// </summary>
     public ShipModel()
     {
     }
@@ -55,20 +51,6 @@ public class ShipModel : AbstractEntity
         this.InitLocations();
     }
 
-    public ShipModel(long id, string name, int[][] locations, ShipSetupModel setup) : base(id)
-    {
-        this.name = name;
-        this.locations = locations;
-        this.setup = setup;
-    }
-
-    public ShipModel(long id, string name, int damages, int[][] locations, ShipSetupModel setup) : base(id)
-    {
-        this.name = name;
-        this.locations = locations;
-        this.setup = setup;
-    }
-
     public ShipModel(ShipModel model)
     {
         this.name = model.Name;
@@ -83,7 +65,7 @@ public class ShipModel : AbstractEntity
     #region Functions
     public Boolean IsAlive()
     {
-        return this.Damages > this.Locations.Length;
+        return this.Damages < this.Locations.Length;
     }
 
     public Boolean IsPlaced()
@@ -209,7 +191,7 @@ public class ShipModel : AbstractEntity
         {
             return null;
         }
-        //Test here that rdm pos +/- size * offset > 0 && < map.size
+
         for (int i = rdmPos[rdmAxis]; i != iStop; i += firstAxisRdmDirection)
         {
             for (int j = rdmPos[otherAxis]; j != jStop; j += secondAxisRdmDirecton)
@@ -282,44 +264,6 @@ public class ShipModel : AbstractEntity
                 this.locations[i][j] = -1;
             }
         }
-    }
-
-    override public String ToString()
-    {
-        String repr = String.Format("[ShipModel] id : {0} - name = {1} - damages : {2} - setups : {3}", this.Id, this.Name, this.Damages, this.Setup);
-
-        if (this.Locations != null)
-        {
-            repr += "locations : [";
-
-            for (var i = 0; i < this.Locations.Length; i++)
-            {
-                for (var j = 0; j < this.Locations[i].Length; j++)
-                {
-                    repr += "[" + this.Locations[i][j];
-
-                    if (j == this.Locations[i].Length - 1)
-                    {
-                        repr += "]";
-                    }
-                    else
-                    {
-                        repr += " ; ";
-                    }
-                }
-
-                if (i == this.Locations.Length - 1)
-                {
-                    repr += "]";
-                }
-                else
-                {
-                    repr += ", ";
-                }
-            }
-        }
-
-        return repr;
     }
     #endregion
 

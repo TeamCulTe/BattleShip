@@ -25,6 +25,8 @@ namespace BattleShip.UserControls
         #region StaticVariables
         public static String SHIP_IMAGE = "ship.jpg";
         public static String WATER_IMAGE = "water.jpg";
+        public static String FIRE_IMAGE = "fire.png";
+        public static String MISSED_IMAGE = "redCross.png";
         public static String RESOURCES_URI = "pack://application:,,,/BattleShip;component/Resources/";
         public static String SOUND = "denis_ha.wav";
         #endregion
@@ -79,6 +81,24 @@ namespace BattleShip.UserControls
             MediaPlayer player = new MediaPlayer();
             player.Open(new Uri(RESOURCES_URI + SOUND));
             player.Play();
+        }
+
+        public void SetFireImage()
+        {
+            this.Image = new BitmapImage(new Uri(RESOURCES_URI + FIRE_IMAGE));
+
+            MediaPlayer player = new MediaPlayer();
+            player.Open(new Uri(RESOURCES_URI + SOUND));
+            player.Play();
+        }
+
+        public void SetMissedImage()
+        {
+            this.Image = new BitmapImage(new Uri(RESOURCES_URI + MISSED_IMAGE));
+
+            //MediaPlayer player = new MediaPlayer();
+            //player.Open(new Uri(RESOURCES_URI + SOUND));
+            //player.Play();
         }
         #endregion
 

@@ -71,7 +71,7 @@
         <TextBox x:Name="mapXSizeValue" Grid.Row="12" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
         <TextBlock x:Name="mapYSizeLabel" Grid.Row="11" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center">Map y size</TextBlock>
         <TextBox x:Name="mapYSizeValue" Grid.Row="12" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center">1</TextBox>
-        <Button x:Name="restoreButton" Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="2" Click="ValidateButton_Click" Visibility="Hidden">Restore last config</Button>
+        <Button x:Name="restoreButton" Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="2" Click="RestoreButton_Click" Visibility="Hidden">Restore last config</Button>
         <Button x:Name="validateButton" Grid.Row="15" Grid.Column="4" Grid.ColumnSpan="2" Click="ValidateButton_Click">Validate</Button>
     </Grid>
 </Page>
