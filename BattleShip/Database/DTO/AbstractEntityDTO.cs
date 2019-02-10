@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleShip.Models
+namespace BattleShip.Database.DTO
 {
-    public class AbstractEntity
+    public abstract class AbstractEntityDTO
     {
         #region StaticVariables
         #endregion
@@ -19,26 +20,33 @@ namespace BattleShip.Models
         #endregion
 
         #region Attributes
-        private long id = 0;
+        [Key]
+        private long id;
+        [Column(TypeName = "date")]
+        private DateTime createdAt;
         #endregion
 
         #region Properties
-        [Key]
         public long Id { get => id; set => id = value; }
+        public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public AbstractEntity()
+        protected AbstractEntityDTO()
         {
 
         }
-   
-        public AbstractEntity(long id)
+
+        protected AbstractEntityDTO(long id)
+        {
+            this.Id = id;
+            this.CreatedAt = DateTime.Now;
+        }
+
+        protected AbstractEntityDTO(long id, DateTime createdAt)
         {
             this.id = id;
+            this.createdAt = createdAt;
         }
         #endregion
 
@@ -50,7 +58,5 @@ namespace BattleShip.Models
 
         #region Events
         #endregion
-
-
     }
 }

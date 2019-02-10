@@ -1,11 +1,10 @@
 
-using BattleShip.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class MapModel : AbstractEntity
+public class MapModel
 {
     #region StaticVariables
     private static MapSetupModel setup;
@@ -27,9 +26,6 @@ public class MapModel : AbstractEntity
     #endregion
 
     #region Constructors
-    /// <summary>
-    /// Default constructor.
-    /// </summary>
     public MapModel()
     {
         if (MapModel.Setup != null)
@@ -47,44 +43,12 @@ public class MapModel : AbstractEntity
     {
         this.field = field;
     }
-
-    public MapModel(long id, bool[][] field) : base(id)
-    {
-        this.field = field;
-    }
     #endregion
 
     #region StaticFunctions
     #endregion
 
     #region Functions
-    public override string ToString()
-    {
-        String repr = String.Format("[MapModel] id : {0}", this.Id);
-
-        if (this.Field != null)
-        {
-            repr += " - field : \n[";
-
-            for (var i = 0; i < this.Field.Length; i++)
-            {
-                for (var j = 0; j < this.field[i].Length; j++)
-                {
-                    repr += this.field[i][j];
-
-                    if (j != this.field[i].Length)
-                    {
-                        repr += " ";
-                    }
-                }
-
-                repr += "\n";
-            }
-        }
-
-        return repr;
-    }
-
     public static int[] GetRandomPoints()
     {
         if (MapModel.Setup == null)

@@ -1,5 +1,6 @@
 
 using BattleShip.Database;
+using BattleShip.Database.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,36 +37,71 @@ public class SetupController
     #endregion
 
     #region Functions
-    /// <summary>
-    /// @param setup The setup to save into the database.
-    /// </summary>
-    public void DbSave(AbstractSetup setup)
+    public static void DbSave(AbstractSetup setup)
     {
-        using (var dbContext = new ApplicationDbContext())
+        using (var db = new ApplicationDbContext())
         {
-            dbContext.AbstractSetups.Add(setup);
-            dbContext.SaveChanges();
+            if (setup.GetType() == typeof(ShipSetupModel))
+            {
+                db.ShipSetups.Add(new ShipSetupDTO(setup as ShipSetupModel));
+            }
+            else if (setup.GetType() == typeof(MapSetupModel))
+            {
+                db.MapSetups.Add(new MapSetupDTO(setup as MapSetupModel));
+            }
+
+            db.SaveChanges();
         }
     }
 
-    /// <summary>
-    /// @param id The id of the setup to load from database.
-    /// @return The loaded setup.
-    /// </summary>
-    public AbstractSetup DbLoad(int id)
+    public static ShipSetupModel[] DbLoadLastShipsSetup()
     {
-        // TODO implement here
-        return null;
+        using (var db = new ApplicationDbContext())
+        {
+            int setupNumber = 4;
+
+            ShipSetupDTO[] setup = db.ShipSetups.OrderByDescending(s => s.CreatedAt)
+                       .Take(setupNumber).ToArray();
+
+            if (setup == null || setup.Length == 0)
+            {
+                return null;
+            }
+
+            String[] strSize;
+            int[] size;
+            ShipSetupModel[] setupModels = new ShipSetupModel[setupNumber];
+
+            for (int i = 0; i < setupNumber; i++)
+            {
+                strSize = setup[i].Size.Split(';');
+                size = new int[] { int.Parse(strSize[0]), int.Parse(strSize[1]) };
+                setupModels[i] = new ShipSetupModel(setup[i].Name, size, setup[i].ShipNumber);
+            }
+            
+            return setupModels;
+        }
     }
 
-    /// <summary>
-    /// @param name The name of the last setup to load from the database.
-    /// @return The loaded setup.
-    /// </summary>
-    public AbstractSetup DbLoadLast(String name)
+    public static MapSetupModel DbLoadLastMapSetup()
     {
-        // TODO implement here
-        return null;
+        using (var db = new ApplicationDbContext())
+        {
+            MapSetupDTO[] setup = db.MapSetups.OrderByDescending(s => s.CreatedAt)
+                       .Take(1).ToArray();
+
+            if (setup == null || setup.Length == 0)
+            {
+                return null;
+            }
+
+            String[] strSize = setup[0].Size.Split(';');
+            int[] size = new int[] { int.Parse(strSize[0]), int.Parse(strSize[1]) };
+
+            MapSetupModel.Dimensions = setup[0].Dimensions;
+
+            return new MapSetupModel(setup[0].Name, size);
+        }
     }
     #endregion
 

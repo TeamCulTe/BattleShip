@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BattleShip.UserControls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,20 +13,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static BattleShip.UserControls.CustomMapGrid;
+using static BattleShip.UserControls.CustomShipButton;
 
 namespace BattleShip.Views
 {
     /// <summary>
     /// Logique d'interaction pour PlacementPage.xaml
     /// </summary>
-    public partial class PlacementPage : Page
+    public partial class PlacementPage : Page, ICustomMapGridListener, ICustomShipButtonListener
     {
 
         #region StaticVariables
         #endregion
 
         #region Constants
-        private const String FORMAT = "{0}";
         #endregion
 
         #region Variables
@@ -33,7 +35,6 @@ namespace BattleShip.Views
 
         #region Attributes
         private ShipModel currentShip;
-        private Button clicked;
         private PlayerModel player;
         private ShipModel[] ships;
         #endregion
@@ -42,13 +43,9 @@ namespace BattleShip.Views
         public ShipModel CurrentShip { get => currentShip; set => currentShip = value; }
         public PlayerModel Player { get => player; set => player = value; }
         public ShipModel[] Ships { get => ships; set => ships = value; }
-        public Button Clicked { get => clicked; set => clicked = value; }
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
         public PlacementPage()
         {
             InitializeComponent();
@@ -62,8 +59,11 @@ namespace BattleShip.Views
             this.Ships = ships;
 
             this.InitShipItems();
-            this.GenerateViewMap();
-            this.PopulateMap();
+
+            this.field.Listener = this;
+            this.field.Map = this.player.Map;
+
+            this.field.PopulateMap();
         }
         #endregion
 
@@ -71,17 +71,61 @@ namespace BattleShip.Views
         #endregion
 
         #region Functions
+        public void NotifyButtonClicked(object sender, EventArgs e)
+        {
+            CustomMapButton current = sender as CustomMapButton;
+
+            if (this.CurrentShip == null)
+            {
+                return;
+            }
+
+            int[] pos = new int[] { current.X, current.Y};
+
+            if (!ShipController.PlaceShip(this.currentShip, pos))
+            {
+                String errorMessage = "The ship cannot be placed here.\n";
+
+                if (this.currentShip.IsPlaced())
+                {
+                    errorMessage += "The ship positions are all defined for this ship.\n";
+                }
+
+                MessageBox.Show(errorMessage, "Error", System.Windows.MessageBoxButton.OK);
+            }
+            else
+            {
+                current.SetShipImage();
+                current.mapButton.IsEnabled = false;
+
+                if (this.currentShip.IsPlaced())
+                {
+                    this.OnShipPlaced();
+                }
+            }
+        }
+
+        public void ShipButtonClicked(CustomShipButton button)
+        {            
+            this.CurrentShip = button.Model;
+        }
+
         private void InitShipItems()
         {
-            this.firstShipName.Text = this.Ships[0].Name;
-            this.secondShipName.Text = this.Ships[1].Name;
-            this.thirdShipName.Text = this.Ships[2].Name;
-            this.fourthShipName.Text = this.Ships[3].Name;
+            this.firstShipButton.Listener = this;
+            this.secondShipButton.Listener = this;
+            this.thirdShipButton.Listener = this;
+            this.fourthShipButton.Listener = this;
 
-            this.fisrtShipNumberLeft.Text = String.Format(FORMAT, this.Ships[0].Setup.ShipNumber);
-            this.secondShipNumberLeft.Text = String.Format(FORMAT, this.Ships[1].Setup.ShipNumber);
-            this.thirdShipNumberLeft.Text = String.Format(FORMAT, this.Ships[2].Setup.ShipNumber);
-            this.fourthShipNumberLeft.Text = String.Format(FORMAT, this.Ships[3].Setup.ShipNumber);
+            this.firstShipButton.Model = this.Ships[0];
+            this.secondShipButton.Model = this.Ships[1];
+            this.thirdShipButton.Model = this.Ships[2];
+            this.fourthShipButton.Model = this.Ships[3];
+
+            this.firstShipButton.ShipNumberLabel = this.fisrtShipNumberLeft;
+            this.secondShipButton.ShipNumberLabel = this.secondShipNumberLeft;
+            this.thirdShipButton.ShipNumberLabel = this.thirdShipNumberLeft;
+            this.fourthShipButton.ShipNumberLabel = this.fourthShipNumberLeft;
         }
 
         private Boolean AllShipPlaced()
@@ -98,58 +142,37 @@ namespace BattleShip.Views
 
         private void OnShipPlaced()
         {
-            if (currentShip != null)
+            if (this.CurrentShip != null)
             {
-                int i;
+                CustomShipButton button;
 
-                for (i = 0; i < this.ships.Length; i++)
+                if (CurrentShip.Name == this.firstShipButton.Model.Name)
                 {
-                    if (this.ships[i].Name == this.currentShip.Name)
-                    {
-                        break;
-                    }
+                    button = this.firstShipButton;
                 }
-
-                int left;
-
-                switch (i)
+                else if (CurrentShip.Name == this.secondShipButton.Model.Name)
                 {
-                    case 0:
-                        left = int.Parse(this.fisrtShipNumberLeft.Text) - 1;
-                        this.fisrtShipNumberLeft.Text = String.Format(FORMAT, left);
-
-                        break;
-                    case 1:
-                        left = int.Parse(this.secondShipNumberLeft.Text) - 1;
-                        this.secondShipNumberLeft.Text = String.Format(FORMAT, left);
-
-                        break;
-                    case 2:
-                        left = int.Parse(this.thirdShipNumberLeft.Text) - 1;
-                        this.thirdShipNumberLeft.Text = String.Format(FORMAT, left);
-
-                        break;
-                    case 3:
-                        left = int.Parse(this.fourthShipNumberLeft.Text) - 1;
-                        this.fourthShipNumberLeft.Text = String.Format(FORMAT, left);
-
-                        break;
-                    default:
-                        return;
+                    button = this.secondShipButton;
                 }
-                
-                this.Player.Ships.Add(this.CurrentShip);
-
-                if (left == 0)
+                else if (CurrentShip.Name == this.thirdShipButton.Model.Name)
                 {
-                    this.clicked.IsEnabled = false;
-                    this.clicked.Background = Brushes.Red;
-                    this.currentShip = null;
+                    button = this.thirdShipButton;
+                }
+                else if (CurrentShip.Name == this.fourthShipButton.Model.Name)
+                {
+                    button = this.fourthShipButton;
                 }
                 else
                 {
-                    this.currentShip = ShipFactory.GenerateUnplacedCopy(this.currentShip);
+                    return;
                 }
+
+                button.ShipsToPlace = button.ShipsToPlace - 1;
+
+                this.Player.Ships.Add(this.CurrentShip);
+
+                this.currentShip = (button.ShipsToPlace == 0) ? null : this.currentShip = ShipFactory.GenerateUnplacedCopy(this.currentShip);
+
 
                 if (this.AllShipPlaced())
                 {
@@ -159,128 +182,9 @@ namespace BattleShip.Views
             }
         }
 
-        private void GenerateViewMap()
-        {
-            this.field.ShowGridLines = true;
-
-            for (int i = 0; i < this.Player.Map.Field.Length; i++)
-            {
-                this.field.ColumnDefinitions.Add(new ColumnDefinition());
-            }
-
-            for (int j = 0; j < this.Player.Map.Field[0].Length; j++)
-            {
-                this.field.RowDefinitions.Add(new RowDefinition());
-            }
-        }
-
-        private void PopulateMap()
-        {
-            for (int row = 0; row < this.Player.Map.Field.Length; row++)
-            {
-                for (int col = 0; col < this.Player.Map.Field[0].Length; col++)
-                {
-                    Button button = new Button();
-
-                    button.Name = String.Format("btnRow{0}Col{1}", row, col);
-                    button.Click += new RoutedEventHandler(MapButton_Click);
-                    button.Background = Brushes.Aqua;
-
-                    this.field.Children.Add(button);
-
-                    Grid.SetRow(button, row);
-                    Grid.SetColumn(button, col);
-                }
-            } 
-        }
-
-        private int getShipIndex(Button shipButton)
-        {
-            int shipIndex;
-
-            switch (shipButton.Name)
-            {
-                case "firstShipButton":
-                    shipIndex = 0;
-
-                    break;
-                case "secondShipButton":
-                    shipIndex = 1;
-
-                    break;
-                case "thirdShipButton":
-                    shipIndex = 2;
-
-                    break;
-                case "fourthShipButton":
-                    shipIndex = 3;
-
-                    break;
-                default:
-                    return -1;
-            }
-
-            return shipIndex;
-        }
-
-        private int[] GetButtonPosition(Button btn)
-        {
-            return new int[] { Grid.GetColumn(btn), Grid.GetRow(btn) };
-        }
         #endregion
 
         #region Events
-        private void ShipName_Click(object sender, RoutedEventArgs e)
-        {
-            Button current = (sender as Button);
-            int shipIndex = this.getShipIndex(current);
-
-            if (this.clicked != null && this.currentShip != null && !this.currentShip.IsPlaced())
-            {
-                this.clicked.IsEnabled = true;
-                this.clicked.Background = Brushes.Aqua;
-            }
-
-            this.clicked = current;
-            this.clicked.IsEnabled = false;
-            this.clicked.Background = Brushes.Green;
-            this.CurrentShip = this.Ships[shipIndex];
-        }
-
-        private void MapButton_Click(object sender, EventArgs e)
-        {
-            Button current = sender as Button;
-
-            if (this.CurrentShip == null)
-            {
-                return;
-            }
-
-            int[] pos = this.GetButtonPosition(current);
-
-            if (!ShipController.PlaceShip(this.currentShip, pos))
-            {
-                String errorMessage = "The ship cannot be placed here.\n";
-
-                if (this.currentShip.IsPlaced())
-                {
-                    errorMessage += "The ship positions are all defined for this ship.\n";
-                }
-
-                MessageBox.Show(errorMessage, "Error", System.Windows.MessageBoxButton.OK);
-            }
-            else
-            {
-                current.IsEnabled = false;
-                current.Background = Brushes.Red;
-
-                if (this.currentShip.IsPlaced())
-                {
-                    this.OnShipPlaced();
-                }
-            }
-        }
-
         private void ValidateButton_Click(object sender, RoutedEventArgs e)
         {
             if (!this.AllShipPlaced())
@@ -290,6 +194,15 @@ namespace BattleShip.Views
             else
             {
                 PlayerModel computer = PlayerController.GenerateIAPlayer(this.player);
+
+                MapController.DbSave(this.player.Map);
+                MapController.DbSave(computer.Map);
+                PlayerController.DbSave(this.Player);
+                PlayerController.DbSave(computer);
+
+                MainPage page = new MainPage(this.Player, computer);
+
+                (this.Parent as Window).Content = page;
             }
         }
         #endregion

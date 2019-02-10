@@ -1,11 +1,10 @@
 
-using BattleShip.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public abstract class AbstractSetup : AbstractEntity
+public abstract class AbstractSetup
 {
     #region StaticVariables
     #endregion
@@ -27,21 +26,12 @@ public abstract class AbstractSetup : AbstractEntity
     #endregion
 
     #region Constructors
-    /// <summary>
-    /// Default constructor.
-    /// </summary>
     public AbstractSetup()
     {
             
     }
 
     protected AbstractSetup(string name, int[] size)
-    {
-        this.name = name;
-        this.size = size;
-    }
-
-    protected AbstractSetup(long id, string name, int[] size) : base(id)
     {
         this.name = name;
         this.size = size;

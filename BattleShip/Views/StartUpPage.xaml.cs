@@ -29,19 +29,28 @@ namespace BattleShip.Views
         #endregion
 
         #region Attributes
+        private ShipSetupModel[] lastShipsSetup;
+        private MapSetupModel lastMapSetup;
         #endregion
 
         #region Properties
+        public ShipSetupModel[] LastShipsSetup { get => lastShipsSetup; set => lastShipsSetup = value; }
+        public MapSetupModel LastMapSetup { get => lastMapSetup; set => lastMapSetup = value; }
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
         public StartUpPage()
         {
             InitializeComponent();
             this.InitShipLists();
+
+            this.lastShipsSetup = SetupController.DbLoadLastShipsSetup();
+            this.lastMapSetup = SetupController.DbLoadLastMapSetup();
+
+            if (this.lastShipsSetup != null && this.lastMapSetup != null)
+            {
+                this.restoreButton.Visibility = Visibility.Visible;
+            }
         }
         #endregion
 
@@ -60,30 +69,30 @@ namespace BattleShip.Views
             }
         }
 
-        private Boolean IsNumberField(TextBox textBox)
+        private Boolean IsPositiveNumberField(TextBox textBox)
         {
             if (!int.TryParse(textBox.Text, out int nb))
             {
                 return false;
             }
 
-            return true;
+            return nb > 0;
         }
 
         private Boolean ValidateShipFields()
         {
-            Boolean valid = this.IsNumberField(this.firstShipNumberValue) &&
-                this.IsNumberField(this.secondShipNumberValue) &&
-                this.IsNumberField(this.thirdShipNumberValue) &&
-                this.IsNumberField(this.fourthShipNumberValue) &&
-                this.IsNumberField(this.firstShipXSizeValue) &&
-                this.IsNumberField(this.secondShipXSizeValue) &&
-                this.IsNumberField(this.thirdShipXSizeValue) &&
-                this.IsNumberField(this.fourthShipXSizeValue) &&
-                this.IsNumberField(this.firstShipYSizeValue) &&
-                this.IsNumberField(this.secondShipYSizeValue) &&
-                this.IsNumberField(this.thirdShipYSizeValue) &&
-                this.IsNumberField(this.fourthShipYSizeValue);
+            Boolean valid = this.IsPositiveNumberField(this.firstShipNumberValue) &&
+                this.IsPositiveNumberField(this.secondShipNumberValue) &&
+                this.IsPositiveNumberField(this.thirdShipNumberValue) &&
+                this.IsPositiveNumberField(this.fourthShipNumberValue) &&
+                this.IsPositiveNumberField(this.firstShipXSizeValue) &&
+                this.IsPositiveNumberField(this.secondShipXSizeValue) &&
+                this.IsPositiveNumberField(this.thirdShipXSizeValue) &&
+                this.IsPositiveNumberField(this.fourthShipXSizeValue) &&
+                this.IsPositiveNumberField(this.firstShipYSizeValue) &&
+                this.IsPositiveNumberField(this.secondShipYSizeValue) &&
+                this.IsPositiveNumberField(this.thirdShipYSizeValue) &&
+                this.IsPositiveNumberField(this.fourthShipYSizeValue);
 
             return valid;
         }
@@ -118,7 +127,7 @@ namespace BattleShip.Views
 
         private Boolean ValidateMapFields()
         {
-            return this.IsNumberField(this.mapXSizeValue) && this.IsNumberField(this.mapYSizeValue);
+            return this.IsPositiveNumberField(this.mapXSizeValue) && this.IsPositiveNumberField(this.mapYSizeValue);
         }
 
         private Boolean ValidateSizes()
@@ -158,7 +167,7 @@ namespace BattleShip.Views
         {
             int[] size;
             int shipNumber;
-            String name = "Ship setup ";
+            String name;
 
             switch (setupNumber)
             {
@@ -258,7 +267,10 @@ namespace BattleShip.Views
                 for (int i = 0; i < ships.Length; i++)
                 {
                     ships[i] = this.InitShipFromInput(i + 1);
+                    SetupController.DbSave(ships[i].Setup);
                 }
+
+                SetupController.DbSave(MapModel.Setup);
 
                 PlacementPage page = new PlacementPage(player, ships);
 
@@ -270,11 +282,11 @@ namespace BattleShip.Views
 
                 if (!this.ValidateShipFields())
                 {
-                    errorMessage += "The ship fields must only contains numbers.\n";
+                    errorMessage += "The ship fields must only contains numbers above 0.\n";
                 }
                 if (!this.ValidateMapFields())
                 {
-                    errorMessage += "The map fields must only contains numbers.\n";
+                    errorMessage += "The map fields must only contains numbers above 0.\n";
                 }
                 if (!this.ValidateShipTypes())
                 {
@@ -291,6 +303,34 @@ namespace BattleShip.Views
 
                 MessageBox.Show(errorMessage, "Error", System.Windows.MessageBoxButton.OK);
             }
+        }
+
+        private void RestoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            int i = this.firstTypeValue.Items.IndexOf(this.LastShipsSetup[0].Name);
+            this.firstTypeValue.SelectedIndex = this.firstTypeValue.Items.IndexOf(Enum.Parse(typeof(ShipType), this.LastShipsSetup[0].Name));
+            this.secondTypeValue.SelectedIndex = this.secondTypeValue.Items.IndexOf(Enum.Parse(typeof(ShipType), this.LastShipsSetup[1].Name));
+            this.thirdTypeValue.SelectedIndex = this.thirdTypeValue.Items.IndexOf(Enum.Parse(typeof(ShipType), this.LastShipsSetup[2].Name));
+            this.fourthTypeValue.SelectedIndex = this.fourthTypeValue.Items.IndexOf(Enum.Parse(typeof(ShipType), this.LastShipsSetup[3].Name));
+
+            this.firstShipXSizeValue.Text = this.LastShipsSetup[0].Size[0].ToString();
+            this.firstShipYSizeValue.Text = this.LastShipsSetup[0].Size[1].ToString();
+            this.firstShipNumberValue.Text = this.LastShipsSetup[0].ShipNumber.ToString();
+
+            this.secondShipXSizeValue.Text = this.LastShipsSetup[1].Size[0].ToString();
+            this.secondShipYSizeValue.Text = this.LastShipsSetup[1].Size[1].ToString();
+            this.secondShipNumberValue.Text = this.LastShipsSetup[1].ShipNumber.ToString();
+
+            this.thirdShipXSizeValue.Text = this.LastShipsSetup[2].Size[0].ToString();
+            this.thirdShipYSizeValue.Text = this.LastShipsSetup[2].Size[1].ToString();
+            this.thirdShipNumberValue.Text = this.LastShipsSetup[2].ShipNumber.ToString();
+
+            this.fourthShipXSizeValue.Text = this.LastShipsSetup[3].Size[0].ToString();
+            this.fourthShipYSizeValue.Text = this.LastShipsSetup[3].Size[1].ToString();
+            this.fourthShipNumberValue.Text = this.LastShipsSetup[3].ShipNumber.ToString();
+
+            this.mapXSizeValue.Text = this.LastMapSetup.Size[0].ToString();
+            this.mapYSizeValue.Text = this.LastMapSetup.Size[1].ToString();
         }
     }
     #endregion

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BattleShip.Database.DTO;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -20,19 +21,21 @@ namespace BattleShip.Database
         #endregion
 
         #region Attributes
-        private DbSet<ShipModel> shipModels;
-        private DbSet<AbstractSetup> abstractSetups;
-        private DbSet<GameModel> gameModels;
-        private DbSet<MapModel> mapModels;
-        private DbSet<PlayerModel> playerModels;
+        private DbSet<ShipDTO> ships;
+        private DbSet<ShipSetupDTO> shipSetups;
+        private DbSet<MapSetupDTO> mapSetups;
+        private DbSet<GameDTO> games;
+        private DbSet<MapDTO> maps;
+        private DbSet<PlayerDTO> players;
         #endregion
 
         #region Properties
-        public DbSet<ShipModel> ShipModels { get => shipModels; set => shipModels = value; }
-        public DbSet<AbstractSetup> AbstractSetups { get => abstractSetups; set => abstractSetups = value; }
-        public DbSet<GameModel> GameModels { get => gameModels; set => gameModels = value; }
-        public DbSet<MapModel> MapModels { get => mapModels; set => mapModels = value; }
-        public DbSet<PlayerModel> PlayerModels { get => playerModels; set => playerModels = value; }
+        public DbSet<ShipDTO> Ships { get => ships; set => ships = value; }
+        public DbSet<ShipSetupDTO> ShipSetups { get => shipSetups; set => shipSetups = value; }
+        public DbSet<MapSetupDTO> MapSetups { get => mapSetups; set => mapSetups = value; }
+        public DbSet<GameDTO> Games { get => games; set => games = value; }
+        public DbSet<MapDTO> Maps { get => maps; set => maps = value; }
+        public DbSet<PlayerDTO> Players { get => players; set => players = value; }
         #endregion
 
         #region Constructors

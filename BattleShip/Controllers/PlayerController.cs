@@ -1,5 +1,6 @@
 
 using BattleShip.Database;
+using BattleShip.Database.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,12 +40,12 @@ public class PlayerController
     /// <summary>
     /// @param player
     /// </summary>
-    public void DbSave(PlayerModel player)
+    public static void DbSave(PlayerModel player)
     {
-        using (var dbContext = new ApplicationDbContext())
+        using (var db = new ApplicationDbContext())
         {
-            dbContext.PlayerModels.Add(player);
-            dbContext.SaveChanges();
+            db.Players.Add(new PlayerDTO(player));
+            db.SaveChanges();
         }
     }
 
@@ -62,7 +63,6 @@ public class PlayerController
         }
     }
 
-
     public static PlayerModel GenerateIAPlayer(PlayerModel model)
     {
         PlayerModel computer = new PlayerModel("Computer", new MapModel());
@@ -71,13 +71,59 @@ public class PlayerController
         {
             computer.Ships.Add(ShipFactory.GenerateUnplacedCopy(ship));
         }
-
-        foreach (var ship in computer.Ships)
-        {
-            ShipController.PlaceShipRandomly(ship); 
-        }
+ 
+        ShipController.PlaceAllShipsRandomly(computer.Ships);
+        PlayerController.PlaceShipsOnMap(computer);
 
         return computer;
+    }
+
+    public static int[] HitPlayerRandomly(PlayerModel player)
+    {
+        Random rdm = new Random();
+        int[] targetLocation;
+
+        do
+        {
+            targetLocation = new int[] { rdm.Next(MapModel.Setup.Size[0]), rdm.Next(MapModel.Setup.Size[1]) };
+        } while (PlayerController.PositionAlreadyShot(targetLocation, player));
+
+        PlayerController.HitAtPosition(targetLocation, player);
+
+        return targetLocation;
+    } 
+
+    public static ShipModel HitAtPosition(int[] position, PlayerModel player)
+    {
+        foreach (var ship in player.Ships)
+        {
+            if (ship.ContainsLocation(position))
+            {
+                ShipController.DamageShip(ship);
+
+                return ship;
+            }
+        }
+
+        return null;
+    }
+
+    public static Boolean PositionAlreadyShot(int[] position, PlayerModel player)
+    {
+        foreach (var loc in player.TargettedLocations)
+        {
+            if (loc.SequenceEqual(position))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void SaveShotPosition(int[] position, PlayerModel player)
+    {
+        player.TargettedLocations.Add(position);
     }
     #endregion
 

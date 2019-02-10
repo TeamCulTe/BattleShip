@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BattleShip.Views"
+      xmlns:usercontrols="clr-namespace:BattleShip.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
@@ -11,6 +12,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -19,8 +21,10 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="playerName" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" TextAlignment="Center" FontSize="15">Player</TextBlock>
-        <TextBlock x:Name="IAName" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" TextAlignment="Center" FontSize="15">Computer</TextBlock>
-        <Grid x:Name="playerField" Grid.Column="0" Grid.Row="1"></Grid>
-        <Grid x:Name="computerField" Grid.Column="1" Grid.Row="1"></Grid>
+        <TextBlock x:Name="computerName" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" TextAlignment="Center" FontSize="15">Computer</TextBlock>
+        <usercontrols:CustomMapGrid x:Name="playerField" Grid.Column="0" Grid.Row="1"></usercontrols:CustomMapGrid>
+        <usercontrols:CustomMapGrid x:Name="computerField" Grid.Column="2" Grid.Row="1"></usercontrols:CustomMapGrid>
+        <TextBlock x:Name="playerLog" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" TextAlignment="Center"></TextBlock>
+        <TextBlock x:Name="computerLog" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" TextAlignment="Center"></TextBlock>
     </Grid>
 </Page>
