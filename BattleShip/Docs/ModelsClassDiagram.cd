@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="AbstractSetup">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAIAAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AbstractSetup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameModel">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAACAAAAAAAgAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Models\GameModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapModel">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAACAAAAAgAAAAAAAAAAAAAAAgAAAAAAAAAgAA=</HashCode>
+      <FileName>Models\MapModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapSetupModel">
+    <Position X="4.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\MapSetupModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerModel">
+    <Position X="9.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQgAEAAAABAQAAAAEAgAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PlayerModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShipModel">
+    <Position X="11.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAACAAAAAiACgIAMARCACQEAAAABAAAIARAABA=</HashCode>
+      <FileName>Models\ShipModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShipSetupModel">
+    <Position X="6.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\ShipSetupModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ShipType" Collapsed="true">
+    <Position X="7.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAgAAAAAAAAAIAAABAAAAAAACAAgIAAAAA=</HashCode>
+      <FileName>Models\ShipType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
